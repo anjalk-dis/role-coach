@@ -1,0 +1,103 @@
+{
+  "id": "compliance-manager",
+  "industry": "BFSI",
+  "profile": {
+    "title": "Compliance Manager",
+    "seniority": "mid to senior level",
+    "summary": "Owns the compliance framework of a bank or NBFC, making sure the business meets RBI, PMLA and fair practices obligations while still being able to grow.",
+    "responsibilities": [
+      "Run the compliance framework, policies and the compliance risk assessment",
+      "Track regulatory change and translate RBI circulars into business actions",
+      "Oversee KYC, AML/CFT controls and suspicious transaction reporting to FIU-IND",
+      "Monitor fair practices, customer grievance redress and mis-selling risk",
+      "Coordinate RBI inspections, observations and compliance closure",
+      "Report compliance risk and breaches to senior management and the board"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Compliance framework and governance",
+      "description": "Three lines of defence, compliance policy, the Chief Compliance Officer role and independence of the compliance function.",
+      "proficiency": "Can explain where compliance sits in the governance model and defend its independence.",
+      "icon": "building"
+    },
+    {
+      "name": "Compliance risk assessment",
+      "description": "Identifying obligations, scoring inherent and residual compliance risk, and prioritising controls and testing.",
+      "proficiency": "Can build and refresh a risk-based compliance risk assessment for a business line.",
+      "icon": "target"
+    },
+    {
+      "name": "Compliance testing and monitoring",
+      "description": "Designing testing plans, sampling, control evidence, exception tracking and issue closure.",
+      "proficiency": "Can design a testing programme and report findings that lead to fixes.",
+      "icon": "pulse"
+    },
+    {
+      "name": "KYC and customer due diligence",
+      "description": "CDD and enhanced due diligence, customer risk categorisation, beneficial ownership and periodic re-KYC.",
+      "proficiency": "Can review a customer file and decide on risk category and EDD needs.",
+      "icon": "shield"
+    },
+    {
+      "name": "AML transaction monitoring and STR",
+      "description": "Alert scenarios, investigation, STR and CTR filing with FIU-IND, tipping-off and sanctions screening.",
+      "proficiency": "Can investigate an alert and decide whether it merits an STR.",
+      "icon": "alert"
+    },
+    {
+      "name": "Fair practices and customer protection",
+      "description": "Fair practices code, grievance redress, mis-selling, digital lending conduct and transparent pricing.",
+      "proficiency": "Can spot conduct risk in a product or sales process and recommend fixes.",
+      "icon": "people"
+    },
+    {
+      "name": "Regulatory change and inspections",
+      "description": "Tracking circulars, impact assessment, implementation, and handling RBI inspection observations.",
+      "proficiency": "Can run a circular from impact analysis to closure and respond to an RBI observation.",
+      "icon": "scale"
+    },
+    {
+      "name": "Communicating compliance to business and board",
+      "description": "Saying no constructively, escalating breaches, and writing concise compliance reports.",
+      "proficiency": "Can present a decision-oriented compliance update to the audit or risk committee.",
+      "icon": "chat"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "Compliance framework, governance and risk assessment",
+      "documents": [
+        "kb/kb_01_compliance_framework_governance.md"
+      ],
+      "icon": "building"
+    },
+    {
+      "name": "KYC, AML and CFT under PMLA",
+      "documents": [
+        "kb/kb_02_kyc_aml_cft_pmla.md"
+      ],
+      "icon": "shield"
+    },
+    {
+      "name": "Conduct, regulatory change and inspections",
+      "documents": [
+        "kb/kb_03_conduct_regulatory_change_inspections.md"
+      ],
+      "icon": "scale"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent seventeen years in compliance at banks and NBFCs: regulatory change, KYC and AML programmes, RBI inspections, and reporting to the audit committee of the board. You now coach compliance managers one-to-one.",
+    "tone": "Warm, direct and practitioner-like. Uses realistic Indian examples such as RBI circulars, STR decisions and customer complaints, with amounts in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I assess compliance risk in a business?",
+      "When should I file an STR?",
+      "Help me respond to an RBI inspection observation.",
+      "How do I tell the business no on a product launch?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

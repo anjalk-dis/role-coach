@@ -1,0 +1,103 @@
+{
+  "id": "actuarial-analyst",
+  "industry": "BFSI",
+  "profile": {
+    "title": "Actuarial Analyst",
+    "seniority": "early to mid level",
+    "summary": "Supports the valuation, pricing, experience analysis and solvency work of a life or general insurer, turning policy and claims data into numbers the business can act on.",
+    "responsibilities": [
+      "Prepare reserve and valuation calculations for quarterly and annual closes",
+      "Run claims triangles and IBNR estimates for general insurance lines",
+      "Analyse mortality, morbidity, lapse and loss ratio experience against assumptions",
+      "Support product pricing and profitability testing for new and revised products",
+      "Compute solvency, capital and ALM metrics for IRDAI and board reporting",
+      "Document methods and assumptions and present results to the Appointed Actuary, finance and business teams"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Claims reserving and IBNR",
+      "description": "Building run-off triangles and estimating ultimate claims using chain ladder, Bornhuetter-Ferguson and loss ratio methods.",
+      "proficiency": "Can build a triangle, select development factors and explain why two methods give different ultimates.",
+      "icon": "chart"
+    },
+    {
+      "name": "Life valuation and reserves",
+      "description": "Gross premium and net premium valuation, best estimate assumptions, margins and the link to policy reserves.",
+      "proficiency": "Can run and reconcile a reserve roll-forward for a traditional life product.",
+      "icon": "calculator"
+    },
+    {
+      "name": "Ind AS 117 / IFRS 17 mechanics",
+      "description": "Fulfilment cash flows, risk adjustment, contractual service margin, groups of contracts and the measurement models.",
+      "proficiency": "Can explain a CSM movement and why a group of contracts became onerous.",
+      "icon": "scale"
+    },
+    {
+      "name": "Mortality and morbidity analysis",
+      "description": "Actual versus expected studies, exposure calculation, standard tables and the use of reinsurer and industry data.",
+      "proficiency": "Can run an A/E study and judge whether a deviation is signal or noise.",
+      "icon": "pulse"
+    },
+    {
+      "name": "Lapse and persistency studies",
+      "description": "Measuring policy persistency by duration, channel and premium band and setting lapse assumptions.",
+      "proficiency": "Can build a lapse table and size the impact of a persistency shortfall on profit.",
+      "icon": "people"
+    },
+    {
+      "name": "Pricing and profit testing",
+      "description": "Projecting premiums, claims, expenses and capital to test margins, IRR and value of new business.",
+      "proficiency": "Can profit-test a simple product and show sensitivity to key assumptions.",
+      "icon": "coins"
+    },
+    {
+      "name": "Solvency and capital management",
+      "description": "Available and required solvency margin, the IRDAI solvency ratio, risk-based capital direction and ALM matching.",
+      "proficiency": "Can compute a solvency ratio and explain what moves it quarter to quarter.",
+      "icon": "shield"
+    },
+    {
+      "name": "Communicating actuarial results",
+      "description": "Explaining uncertainty, assumptions and movements to non-actuaries in finance, product, sales and the board.",
+      "proficiency": "Can present a movement analysis in plain language and defend a judgement call.",
+      "icon": "chat"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "Reserving and valuation: IBNR, life reserves and Ind AS 117 / IFRS 17",
+      "documents": [
+        "kb/kb_01_reserving_valuation_ind_as_117.md"
+      ],
+      "icon": "book"
+    },
+    {
+      "name": "Pricing and experience analysis: mortality, lapse and loss ratios",
+      "documents": [
+        "kb/kb_02_pricing_experience_analysis.md"
+      ],
+      "icon": "calculator"
+    },
+    {
+      "name": "Solvency, capital, ALM and communicating results",
+      "documents": [
+        "kb/kb_03_solvency_capital_alm_communication.md"
+      ],
+      "icon": "shield"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent seventeen years as an actuary at Indian life and general insurers: reserving, pricing, experience studies, IFRS 17 implementation and solvency reporting to IRDAI and the board. You now coach actuarial analysts one-to-one.",
+    "tone": "Warm, precise and practitioner-like, explaining actuarial ideas in plain language with realistic Indian insurance examples in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I estimate IBNR from a claims triangle?",
+      "What is the CSM and how does it move?",
+      "How do I tell if a mortality deviation is real?",
+      "How do I explain a solvency ratio drop to the board?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

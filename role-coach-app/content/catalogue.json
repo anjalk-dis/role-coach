@@ -1,0 +1,118 @@
+{
+  "industries": [
+    {
+      "id": "bfsi",
+      "name": "Banking & Financial Services",
+      "icon": "bank",
+      "theme": "violet",
+      "roles": [
+        {
+          "id": "credit-risk-manager",
+          "name": "Credit Risk Manager",
+          "blurb": "Assess credit exposure, understand risk and make informed lending decisions.",
+          "icon": "chart"
+        },
+        {
+          "id": "actuarial-analyst",
+          "name": "Actuarial Analyst",
+          "blurb": "Model risk, value liabilities and support data-driven decisions.",
+          "icon": "calculator"
+        },
+        {
+          "id": "portfolio-risk-analyst",
+          "name": "Portfolio Risk Analyst",
+          "blurb": "Monitor portfolio health and identify emerging risks.",
+          "icon": "pie"
+        },
+        {
+          "id": "treasury-manager",
+          "name": "Treasury Manager",
+          "blurb": "Manage liquidity, funding and financial exposure.",
+          "icon": "coins"
+        },
+        {
+          "id": "compliance-manager",
+          "name": "Compliance Manager",
+          "blurb": "Ensure regulatory compliance and manage governance risk.",
+          "icon": "shield"
+        },
+        {
+          "id": "relationship-manager",
+          "name": "Relationship Manager",
+          "blurb": "Build client relationships and drive sustainable growth.",
+          "icon": "people"
+        }
+      ]
+    },
+    {
+      "id": "technology",
+      "name": "Technology",
+      "icon": "chip",
+      "theme": "indigo",
+      "roles": [
+        {
+          "id": "product-manager",
+          "name": "Product Manager",
+          "blurb": "Shape what gets built and why.",
+          "icon": "target"
+        }
+      ]
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare",
+      "icon": "heart",
+      "theme": "teal",
+      "roles": [
+        {
+          "id": "clinical-operations-manager",
+          "name": "Clinical Operations Manager",
+          "blurb": "Run safe, efficient clinical operations.",
+          "icon": "pulse"
+        }
+      ]
+    },
+    {
+      "id": "consumer-retail",
+      "name": "Consumer Goods & Retail",
+      "icon": "bag",
+      "theme": "rose",
+      "roles": [
+        {
+          "id": "store-manager",
+          "name": "Store Manager",
+          "blurb": "Lead a store team and grow sales.",
+          "icon": "people"
+        }
+      ]
+    },
+    {
+      "id": "manufacturing",
+      "name": "Manufacturing & Industrial",
+      "icon": "factory",
+      "theme": "amber",
+      "roles": [
+        {
+          "id": "plant-manager",
+          "name": "Plant Manager",
+          "blurb": "Drive safety, quality and throughput.",
+          "icon": "target"
+        }
+      ]
+    },
+    {
+      "id": "energy",
+      "name": "Energy & Utilities",
+      "icon": "leaf",
+      "theme": "green",
+      "roles": [
+        {
+          "id": "grid-operations-lead",
+          "name": "Grid Operations Lead",
+          "blurb": "Keep the grid reliable and resilient.",
+          "icon": "pulse"
+        }
+      ]
+    }
+  ]
+}

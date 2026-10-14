@@ -1,0 +1,103 @@
+{
+  "id": "treasury-manager",
+  "industry": "BFSI",
+  "profile": {
+    "title": "Treasury Manager",
+    "seniority": "mid to senior level",
+    "summary": "Runs a bank's liquidity, funding, investment and market-risk positions daily, balancing profitability against regulatory and risk limits.",
+    "responsibilities": [
+      "Manage daily liquidity, CRR and SLR positions and funding mix",
+      "Monitor LCR, NSFR and the structural liquidity statement",
+      "Run asset-liability management and interest rate risk in the banking book",
+      "Manage the G-sec and investment portfolio within HTM, AFS and FVTPL limits",
+      "Execute money market and FX transactions and hedge exposures",
+      "Present positions and risks to ALCO and report to RBI"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Liquidity risk management",
+      "description": "Managing daily and intraday liquidity using LCR, NSFR, CRR and SLR requirements and internal limits.",
+      "proficiency": "Can run the daily liquidity position and explain movements in LCR and NSFR.",
+      "icon": "coins"
+    },
+    {
+      "name": "Structural liquidity and gap analysis",
+      "description": "Building and reading the structural liquidity statement across time buckets and managing mismatches against limits.",
+      "proficiency": "Can spot a bucket breach early and propose funding or asset actions.",
+      "icon": "chart"
+    },
+    {
+      "name": "Contingency funding planning",
+      "description": "Early warning indicators, stress scenarios, funding sources and escalation steps for a liquidity squeeze.",
+      "proficiency": "Can design and test a contingency funding plan with clear triggers and owners.",
+      "icon": "alert"
+    },
+    {
+      "name": "Interest rate risk in banking book",
+      "description": "Measuring rate risk through repricing gaps, duration, EVE and NII sensitivity under rate shocks.",
+      "proficiency": "Can interpret EVE and NII results and recommend balance sheet or hedging actions.",
+      "icon": "pulse"
+    },
+    {
+      "name": "Funds transfer pricing",
+      "description": "Setting internal transfer rates for assets and liabilities so business units are measured fairly on margin.",
+      "proficiency": "Can explain an FTP curve and its effect on product pricing and incentives.",
+      "icon": "calculator"
+    },
+    {
+      "name": "Investment portfolio management",
+      "description": "Running the G-sec and bond portfolio across HTM, AFS and FVTPL with duration, MTM and SLR considerations.",
+      "proficiency": "Can decide classification, positioning and trading within approved limits.",
+      "icon": "pie"
+    },
+    {
+      "name": "Money market and FX operations",
+      "description": "Using call, repo, CBLO and CP markets, and managing FX positions and hedges with forwards and swaps.",
+      "proficiency": "Can execute funding and hedging trades and explain the cost and risk of each.",
+      "icon": "scale"
+    },
+    {
+      "name": "Communicating with ALCO and regulators",
+      "description": "Presenting positions, risks and trade-offs to ALCO, the board and RBI in clear decision-oriented terms.",
+      "proficiency": "Can present a concise ALCO paper with a recommendation and defend it under questioning.",
+      "icon": "chat"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "Liquidity risk management: LCR, NSFR, CRR/SLR and contingency funding",
+      "documents": [
+        "kb/kb_01_liquidity_risk_management.md"
+      ],
+      "icon": "coins"
+    },
+    {
+      "name": "ALM and interest rate risk in the banking book",
+      "documents": [
+        "kb/kb_02_alm_interest_rate_risk.md"
+      ],
+      "icon": "pulse"
+    },
+    {
+      "name": "Investments, money markets and FX",
+      "documents": [
+        "kb/kb_03_investments_markets_fx.md"
+      ],
+      "icon": "building"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent seventeen years in bank treasury in India: running the money market desk, managing the SLR portfolio, leading ALM and presenting to ALCO and the board. You now coach treasury managers one-to-one.",
+    "tone": "Warm, precise and practitioner-like. Uses realistic Indian treasury examples with amounts in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I manage daily liquidity?",
+      "What is the difference between EVE and NII?",
+      "How should I classify a G-sec purchase?",
+      "How do I explain a gap breach to ALCO?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

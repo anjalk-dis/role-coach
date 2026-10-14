@@ -1,0 +1,110 @@
+{
+  "id": "credit-risk-manager",
+  "industry": "BFSI",
+  "profile": {
+    "title": "Credit Risk Manager",
+    "seniority": "mid to senior level",
+    "summary": "Owns the measurement, monitoring and control of credit risk across a lending portfolio, balancing growth with asset quality.",
+    "responsibilities": [
+      "Set and review credit policy and risk appetite limits",
+      "Approve or recommend large exposures",
+      "Oversee PD, LGD and EAD models and their validation",
+      "Run expected credit loss (ECL) provisioning under IFRS 9 / Ind AS 109",
+      "Monitor portfolio quality and early warning signals",
+      "Run stress tests and report to the risk committee and regulators"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Credit appraisal and underwriting",
+      "description": "Assessing repayment capacity using the 5 Cs, cash-flow analysis, DSCR, leverage, interest cover, collateral and covenants.",
+      "proficiency": "Can independently appraise a mid-sized corporate or SME proposal and structure mitigants.",
+      "icon": "chart"
+    },
+    {
+      "name": "PD, LGD and EAD modelling",
+      "description": "What each parameter means, how it is estimated, through-the-cycle vs point-in-time, validation and backtesting.",
+      "proficiency": "Can challenge model outputs and interpret Gini, calibration and PSI results.",
+      "icon": "calculator"
+    },
+    {
+      "name": "IFRS 9 staging and ECL",
+      "description": "Three-stage model, significant increase in credit risk, 12-month vs lifetime ECL, macro scenarios and overlays.",
+      "proficiency": "Can make and defend staging decisions and explain ECL movements to auditors.",
+      "icon": "scale"
+    },
+    {
+      "name": "Risk appetite and limit setting",
+      "description": "Risk appetite statements, single-name, group and sector concentration limits, breaches and escalation.",
+      "proficiency": "Can design limit frameworks and handle breaches with the business.",
+      "icon": "target"
+    },
+    {
+      "name": "Portfolio monitoring and early warning signals",
+      "description": "Vintage analysis, roll rates, delinquency buckets, SMA and NPA classification, watchlists.",
+      "proficiency": "Can spot deterioration early from portfolio data and trigger action.",
+      "icon": "alert"
+    },
+    {
+      "name": "Stress testing",
+      "description": "Sensitivity, scenario and reverse stress tests and their link to provisions and capital.",
+      "proficiency": "Can design a credit stress scenario and interpret the results for ICAAP.",
+      "icon": "pulse"
+    },
+    {
+      "name": "Regulatory capital (Basel)",
+      "description": "Risk-weighted assets, standardised vs IRB approaches, capital ratios and buffers.",
+      "proficiency": "Can explain how a lending decision consumes capital and affects returns.",
+      "icon": "coins"
+    },
+    {
+      "name": "Communicating risk to the board and business",
+      "description": "Framing risk trade-offs, saying no constructively, presenting portfolio reviews.",
+      "proficiency": "Can present a concise, decision-oriented portfolio review to a risk committee.",
+      "icon": "chat"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "Expected Credit Loss under IFRS 9 / Ind AS 109",
+      "documents": [
+        "kb/kb_01_expected_credit_loss_ifrs9.md"
+      ],
+      "icon": "book"
+    },
+    {
+      "name": "Credit risk parameters: PD, LGD and EAD",
+      "documents": [
+        "kb/kb_02_credit_risk_parameters_pd_lgd_ead.md"
+      ],
+      "icon": "calculator"
+    },
+    {
+      "name": "Credit appraisal, policy and risk appetite",
+      "documents": [
+        "kb/kb_03_credit_appraisal_policy_risk_appetite.md"
+      ],
+      "icon": "shield"
+    },
+    {
+      "name": "Regulatory capital, asset classification and portfolio monitoring",
+      "documents": [
+        "kb/kb_04_regulatory_capital_asset_classification_monitoring.md"
+      ],
+      "icon": "building"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent eighteen years in credit risk at banks and NBFCs: retail and corporate underwriting, building PD and LGD models, running IFRS 9 expected credit loss processes, and presenting to the board risk committee. You now coach credit risk managers one-to-one.",
+    "tone": "Warm, precise and practitioner-like. Uses realistic Indian banking examples with amounts in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I evaluate a borrower's credit risk?",
+      "What are the early warning signs of risk?",
+      "Help me analyse a lending scenario.",
+      "How do I explain a high-risk decision to a stakeholder?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

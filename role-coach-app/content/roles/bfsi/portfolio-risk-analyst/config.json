@@ -1,0 +1,103 @@
+{
+  "id": "portfolio-risk-analyst",
+  "industry": "BFSI",
+  "profile": {
+    "title": "Portfolio Risk Analyst",
+    "seniority": "junior to mid level",
+    "summary": "Monitors the health of a bank or NBFC lending portfolio, turning loan-level data into early warnings, stress results and clear insights for management.",
+    "responsibilities": [
+      "Build and refresh portfolio quality analytics such as vintage curves, roll rates and migration matrices",
+      "Track delinquency, SMA buckets, NPA slippage and credit cost across retail and MSME/corporate books",
+      "Monitor early warning indicators and maintain watchlists with the credit and collections teams",
+      "Measure concentration by sector, geography, product and borrower group",
+      "Run sensitivity and scenario stress tests and size their impact on provisions and capital",
+      "Prepare monthly dashboards and committee packs that explain what changed, why and what to do"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Vintage and cohort analysis",
+      "description": "Building and reading vintage curves by origination month, product and channel to judge underwriting quality.",
+      "proficiency": "Can spot a weak cohort early and separate seasoning effects from genuine deterioration.",
+      "icon": "chart"
+    },
+    {
+      "name": "Roll rates and flow rates",
+      "description": "Measuring movement between delinquency buckets and from performing to NPA, and using it to forecast losses.",
+      "proficiency": "Can compute roll rates from loan-level data and project next quarter's slippage.",
+      "icon": "pulse"
+    },
+    {
+      "name": "Migration matrices and concentration",
+      "description": "Rating and bucket migration matrices, and concentration measures such as top-N share and HHI.",
+      "proficiency": "Can read a migration matrix and quantify sector or borrower concentration risk.",
+      "icon": "pie"
+    },
+    {
+      "name": "Early warning indicators",
+      "description": "Behavioural, financial and external signals of stress, including SMA-0/1/2 tracking and watchlists.",
+      "proficiency": "Can design and tune an EWS trigger set that catches stress early without drowning teams in false alerts.",
+      "icon": "alert"
+    },
+    {
+      "name": "Stress and scenario testing",
+      "description": "Sensitivity, scenario and sector stress tests flowing through to NPAs, provisions and capital.",
+      "proficiency": "Can build a simple, transparent credit stress model and explain its assumptions.",
+      "icon": "scale"
+    },
+    {
+      "name": "Data wrangling in SQL and Excel",
+      "description": "Joining loan, repayment and bureau data, defining buckets correctly and reconciling to the general ledger.",
+      "proficiency": "Can build a clean portfolio dataset and catch data quality issues before they reach a report.",
+      "icon": "calculator"
+    },
+    {
+      "name": "Credit cost and RAROC basics",
+      "description": "Credit cost, provision coverage, risk-adjusted return and how pricing and risk interact.",
+      "proficiency": "Can explain what is driving credit cost and compare segments on a risk-adjusted basis.",
+      "icon": "coins"
+    },
+    {
+      "name": "Dashboards and storytelling",
+      "description": "Choosing KPIs, building clear dashboards and framing insights for risk committees and business heads.",
+      "proficiency": "Can present a one-page portfolio story with a clear so-what and recommended action.",
+      "icon": "chat"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "Portfolio analytics: vintages, roll rates, migration and concentration",
+      "documents": [
+        "kb/kb_01_portfolio_analytics_vintage_roll_rates_concentration.md"
+      ],
+      "icon": "chart"
+    },
+    {
+      "name": "Early warning signals, SMA buckets and stress testing",
+      "documents": [
+        "kb/kb_02_early_warning_sma_stress_testing.md"
+      ],
+      "icon": "alert"
+    },
+    {
+      "name": "Portfolio reporting, KPIs, credit cost and dashboards",
+      "documents": [
+        "kb/kb_03_portfolio_reporting_kpis_dashboards.md"
+      ],
+      "icon": "building"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent fifteen years in portfolio risk at Indian banks and NBFCs, building vintage and roll-rate analytics, early warning systems and stress tests for retail, MSME and corporate books, and presenting findings to risk committees. You now coach portfolio risk analysts one-to-one.",
+    "tone": "Warm, practical and data-minded; explains concepts with realistic Indian examples using amounts in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I read a vintage curve?",
+      "What are the early warning signs in a portfolio?",
+      "How do I build a roll rate analysis?",
+      "How do I present portfolio risk to management?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

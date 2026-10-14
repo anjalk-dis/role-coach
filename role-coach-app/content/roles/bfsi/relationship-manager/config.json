@@ -1,0 +1,103 @@
+{
+  "id": "relationship-manager",
+  "industry": "BFSI",
+  "profile": {
+    "title": "Relationship Manager",
+    "seniority": "mid level",
+    "summary": "Owns a book of wealth, priority and business banking clients, deepening relationships and recommending suitable products within regulatory and ethical limits.",
+    "responsibilities": [
+      "Acquire, onboard and segment affluent and business banking clients",
+      "Understand client goals and build account plans to grow share of wallet",
+      "Recommend suitable investments, insurance, deposits and credit products",
+      "Run periodic portfolio and relationship reviews with clients",
+      "Resolve client queries and complaints in line with RBI fair practices",
+      "Manage the client pipeline, targets and compliance obligations"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Client discovery and questioning",
+      "description": "Using open, consultative questions to uncover goals, family situation, cash flows and concerns before recommending anything.",
+      "proficiency": "Can run a structured first meeting and capture a complete client picture.",
+      "icon": "chat"
+    },
+    {
+      "name": "Client segmentation and account planning",
+      "description": "Segmenting the book by wealth and potential, estimating share of wallet and building a plan for each key client.",
+      "proficiency": "Can build and maintain account plans for the top clients in a portfolio.",
+      "icon": "target"
+    },
+    {
+      "name": "Risk profiling and asset allocation",
+      "description": "Assessing risk appetite, capacity and horizon, and mapping them to a sensible asset allocation.",
+      "proficiency": "Can explain why a client's allocation fits their profile and rebalance it.",
+      "icon": "pie"
+    },
+    {
+      "name": "Product knowledge and suitability",
+      "description": "Mutual funds, insurance, deposits, bonds and loans, matched to client need under SEBI, AMFI, IRDAI and RBI rules.",
+      "proficiency": "Can justify every recommendation on suitability grounds and avoid mis-selling.",
+      "icon": "coins"
+    },
+    {
+      "name": "Structuring review meetings",
+      "description": "Planning an agenda, presenting performance honestly, linking it to goals and agreeing clear next steps.",
+      "proficiency": "Can run a concise, goal-linked portfolio review and leave with agreed actions.",
+      "icon": "book"
+    },
+    {
+      "name": "Handling objections and concerns",
+      "description": "Listening to hesitation about fees, returns or timing and responding with facts and empathy rather than pressure.",
+      "proficiency": "Can handle common objections calmly and recognise when the answer is no.",
+      "icon": "people"
+    },
+    {
+      "name": "Complaints, ethics and compliance",
+      "description": "Disclosures, KYC, conflict of interest, fair practices and resolving complaints without defensiveness.",
+      "proficiency": "Can handle a complaint end to end and spot compliance red flags in a sale.",
+      "icon": "scale"
+    },
+    {
+      "name": "Portfolio and pipeline management",
+      "description": "Prioritising clients, tracking opportunities and attrition signals, and balancing targets with client interest.",
+      "proficiency": "Can manage a book of clients with a clear weekly contact and pipeline rhythm.",
+      "icon": "pulse"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "Client needs discovery and relationship building",
+      "documents": [
+        "kb/kb_01_client_discovery_relationship_building.md"
+      ],
+      "icon": "people"
+    },
+    {
+      "name": "Financial planning and product suitability",
+      "documents": [
+        "kb/kb_02_financial_planning_product_suitability.md"
+      ],
+      "icon": "shield"
+    },
+    {
+      "name": "Sales conversations, objections and ethics",
+      "documents": [
+        "kb/kb_03_sales_conversations_objections_ethics.md"
+      ],
+      "icon": "chat"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent sixteen years in Indian banking, first as a branch relationship manager and then leading priority and wealth teams that served salaried professionals, business owners and families. You now coach relationship managers one-to-one on how to build trust, recommend suitably and grow client relationships responsibly.",
+    "tone": "Warm, practical and honest, like a senior colleague. Uses realistic Indian client examples with amounts in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I run a first meeting with a new client?",
+      "How do I handle a client who says the fees are too high?",
+      "How do I choose the right product for a client?",
+      "How do I cross-sell without sounding pushy?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}
