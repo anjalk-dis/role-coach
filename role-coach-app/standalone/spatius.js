@@ -1,5 +1,7 @@
 // ===== Coach runtime (Spatius avatar + ElevenLabs agent) =====
-// Two modes: single-file (content + keys embedded in the HTML) or server (node server.mjs keeps keys server-side).
+// Two modes: single-file (content embedded in the HTML) or server (node server.mjs serves content and the ElevenLabs agent id).
+// Spatius values (app id, API key, avatar id, region) come from window.COACH_CONFIG (public/coach-config.js) in both modes;
+// the browser fetches the Spatius session token itself.
 const SERVER_MODE = !document.getElementById("content-data");
 const CONTENT = SERVER_MODE ? null : JSON.parse(document.getElementById("content-data").textContent);
 const { AvatarSDK, AvatarManager, AvatarView, DrivingServiceMode, ConversationState, ConnectionState, Conversation } = window.CoachVendor;
@@ -13,8 +15,10 @@ let CONFIG = {
   spatiusAvatarId: "__SPATIUS_AVATAR_ID__", // blank = first avatar in your Spatius app
   spatiusRegion: "ap-northeast",          // your Spatius app lives in ap-northeast
   previewMode: false,                     // true = UI only, no avatar/voice
+  ...(window.COACH_CONFIG || {}),         // public/coach-config.js
 };
-if (SERVER_MODE) CONFIG = { ...CONFIG, spatiusApiKey: "", ...(await (await fetch("/api/config", { cache: "no-store" })).json()) };
+if (SERVER_MODE) CONFIG = { ...CONFIG, ...(await (await fetch("/api/config", { cache: "no-store" })).json()) };
+const CONFIG_HINT = "Copy public/coach-config.example.js to public/coach-config.js and fill in your Spatius values.";
 const MAX_VAR_CHARS = 1000, CHUNK_CHARS = 9000;
 const filled = (v) => v && !String(v).startsWith("__");
 
@@ -68,16 +72,12 @@ function loadRoleLocal(industryId, roleId) {
 let _sdkInit = null, _avatarIdP = null, _avatarCache = {};
 const netErr = (what) => new Error(`The browser couldn't reach ${what} (network or browser security block).`);
 function initSpatius() {
+  if (!filled(CONFIG.spatiusAppId)) return Promise.reject(new Error(`Spatius app id is missing. ${CONFIG_HINT}`));
   return (_sdkInit ??= AvatarSDK.initialize(CONFIG.spatiusAppId, { region: CONFIG.spatiusRegion, drivingServiceMode: DrivingServiceMode.direct, logLevel: "error" })
     .catch((e) => { _sdkInit = null; throw e; }));
 }
 async function spatiusToken() {
-  if (SERVER_MODE) {
-    const r = await fetch("/api/spatius-token", { method: "POST" });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok || !j.sessionToken) throw new Error(j.error || `Spatius token error ${r.status}`);
-    return j.sessionToken;
-  }
+  if (!filled(CONFIG.spatiusApiKey)) throw new Error(`Spatius API key is missing. ${CONFIG_HINT}`);
   let r;
   try {
     r = await fetch(`https://console.${CONFIG.spatiusRegion}.spatius.ai/v1/console/session-tokens`, {
@@ -91,7 +91,7 @@ async function spatiusToken() {
 }
 function spatiusAvatarId() {
   if (filled(CONFIG.spatiusAvatarId)) return Promise.resolve(CONFIG.spatiusAvatarId);
-  if (SERVER_MODE) return Promise.reject(new Error("SPATIUS_AVATAR_ID is missing in .env"));
+  if (!filled(CONFIG.spatiusApiKey)) return Promise.reject(new Error(`Spatius API key is missing. ${CONFIG_HINT}`));
   return (_avatarIdP ??= (async () => {
     let r;
     try { r = await fetch("https://console.spatius.ai/v1/open/avatars?pagination.pageSize=20", { headers: { "X-App-ID": CONFIG.spatiusAppId, "X-API-Key": CONFIG.spatiusApiKey } }); }

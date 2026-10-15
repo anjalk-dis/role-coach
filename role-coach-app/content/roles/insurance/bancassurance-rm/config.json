@@ -1,0 +1,103 @@
+{
+  "id": "bancassurance-rm",
+  "industry": "Insurance",
+  "profile": {
+    "title": "Bancassurance Relationship Manager",
+    "seniority": "mid level",
+    "summary": "Sells life insurance to a partner bank's customers through its branches, working with branch staff to turn banking relationships into suitable protection and savings sales.",
+    "responsibilities": [
+      "Use branch customer data to identify protection and savings needs",
+      "Run insurance conversations with walk-in and referred bank customers",
+      "Partner with branch managers and bank staff to generate leads and joint calls",
+      "Recommend suitable term and savings plans without linking them to banking services",
+      "Follow IRDAI and bank conduct rules on consent, disclosure and fair selling",
+      "Manage a pipeline, conversion targets and post-sale servicing across branches"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Spotting needs from bank data",
+      "description": "Reading salary credits, new loans, child accounts and FD maturities as triggers for insurance conversations.",
+      "proficiency": "Can build a weekly branch lead list from relationship data within permitted use.",
+      "icon": "chart"
+    },
+    {
+      "name": "Starting insurance conversations",
+      "description": "Opening a protection discussion with a banking customer naturally, without sounding like a hard sell.",
+      "proficiency": "Can start a respectful insurance conversation with a savings customer in under a minute.",
+      "icon": "chat"
+    },
+    {
+      "name": "Working with branch teams",
+      "description": "Building referral habits with tellers, relationship officers and branch managers through trust and joint planning.",
+      "proficiency": "Can run a branch huddle and secure steady, quality referrals from staff.",
+      "icon": "people"
+    },
+    {
+      "name": "Term versus savings positioning",
+      "description": "Explaining when pure protection fits and when a savings or guaranteed plan fits, by customer goal.",
+      "proficiency": "Can recommend the right product type and explain trade-offs honestly.",
+      "icon": "scale"
+    },
+    {
+      "name": "Loan-linked protection",
+      "description": "Offering cover alongside home or personal loans while keeping the purchase voluntary and the loan decision separate.",
+      "proficiency": "Can discuss loan protection clearly without implying it affects approval.",
+      "icon": "shield"
+    },
+    {
+      "name": "Fact-find and cover sizing",
+      "description": "Calculating needed cover from income, liabilities, dependants and existing policies.",
+      "proficiency": "Can size term cover for a salaried customer with a loan in a single meeting.",
+      "icon": "calculator"
+    },
+    {
+      "name": "IRDAI and bank conduct rules",
+      "description": "Applying disclosure, consent, suitability and no-misrepresentation rules in a bank setting, including that insurance is not a deposit.",
+      "proficiency": "Can sell inside a branch without mis-selling, tying or misusing customer data.",
+      "icon": "alert"
+    },
+    {
+      "name": "Pipeline and conversion management",
+      "description": "Tracking leads, meetings, proposals and issuances across branches to hit targets sustainably.",
+      "proficiency": "Can diagnose funnel leaks and improve conversion and persistency.",
+      "icon": "target"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "IRDAI compliance for insurance sales",
+      "documents": [
+        "shared/kb/kb_irdai_compliance_for_sales.md"
+      ],
+      "icon": "shield"
+    },
+    {
+      "name": "Term insurance: product and selling",
+      "documents": [
+        "shared/kb/kb_term_insurance_product_and_selling.md"
+      ],
+      "icon": "book"
+    },
+    {
+      "name": "Selling insurance in a bank branch",
+      "documents": [
+        "kb/kb_01_selling_insurance_in_a_bank_branch.md"
+      ],
+      "icon": "building"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent fourteen years in bancassurance, selling in branches, managing bank partnerships and training relationship managers on fair selling. You now coach bancassurance relationship managers one-to-one.",
+    "tone": "Warm, practical and respectful of the bank setting. Uses branch examples with salaries, loans and premiums in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I start an insurance conversation with a savings customer?",
+      "Can I offer term cover with a home loan?",
+      "How do I get branch staff to give me leads?",
+      "What can't I say while selling in a branch?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

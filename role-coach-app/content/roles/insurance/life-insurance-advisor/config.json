@@ -1,0 +1,103 @@
+{
+  "id": "life-insurance-advisor",
+  "industry": "Insurance",
+  "profile": {
+    "title": "Life Insurance Advisor",
+    "seniority": "entry to mid level",
+    "summary": "Helps individuals and families protect their income and plan their savings by recommending suitable term and savings plans, and builds a business on trust, referrals and renewals.",
+    "responsibilities": [
+      "Prospect and build a steady pipeline through referrals, community and digital leads",
+      "Run fact-finds and need analysis to size protection and savings goals",
+      "Recommend suitable term, savings and retirement plans in simple language",
+      "Handle objections and close without pressure or misleading claims",
+      "Complete proposals, KYC, disclosures and medical requirements accurately",
+      "Service customers after the sale, protect persistency and earn referrals"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Prospecting and referral building",
+      "description": "Finding and approaching prospects through warm referrals, centres of influence, community groups and digital leads.",
+      "proficiency": "Can generate a steady weekly pipeline and ask every happy customer for two referrals.",
+      "icon": "people"
+    },
+    {
+      "name": "Fact-find and need analysis",
+      "description": "Asking about income, dependants, loans, goals and existing cover to size the protection gap.",
+      "proficiency": "Can complete a structured fact-find and calculate a defensible life cover amount.",
+      "icon": "calculator"
+    },
+    {
+      "name": "Pitching term insurance",
+      "description": "Explaining pure protection simply, including cover amount, premium, riders and why it matters for the family.",
+      "proficiency": "Can pitch term cover clearly to any customer, including homemakers and first-time earners.",
+      "icon": "shield"
+    },
+    {
+      "name": "Savings and retirement plans",
+      "description": "Positioning traditional, ULIP and annuity plans honestly by goal, with returns, lock-in and charges explained.",
+      "proficiency": "Can match a plan type to a goal and explain trade-offs without exaggerating returns.",
+      "icon": "coins"
+    },
+    {
+      "name": "Objection handling",
+      "description": "Responding to price, trust, timing and \"I'll think about it\" objections with questions and facts.",
+      "proficiency": "Can uncover the real objection and respond calmly without pushing.",
+      "icon": "chat"
+    },
+    {
+      "name": "IRDAI-compliant selling",
+      "description": "Following disclosure, suitability, no-misrepresentation, no-rebating and customer consent rules while selling.",
+      "proficiency": "Can sell confidently within conduct rules and spot mis-selling traps before they happen.",
+      "icon": "scale"
+    },
+    {
+      "name": "Closing and documentation",
+      "description": "Moving from recommendation to a correct proposal form, KYC, medical disclosures and premium payment.",
+      "proficiency": "Can close without pressure and submit clean proposals that reduce rejections and disputes.",
+      "icon": "target"
+    },
+    {
+      "name": "After-sales service and persistency",
+      "description": "Welcome calls, renewal reminders, claims support and policy reviews that keep customers paying and referring.",
+      "proficiency": "Can keep a book with strong 13th and 25th month persistency and steady referrals.",
+      "icon": "pulse"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "IRDAI compliance for insurance sales",
+      "documents": [
+        "shared/kb/kb_irdai_compliance_for_sales.md"
+      ],
+      "icon": "shield"
+    },
+    {
+      "name": "Term insurance: product and selling",
+      "documents": [
+        "shared/kb/kb_term_insurance_product_and_selling.md"
+      ],
+      "icon": "book"
+    },
+    {
+      "name": "The advisor sales cycle",
+      "documents": [
+        "kb/kb_01_advisor_sales_cycle.md"
+      ],
+      "icon": "target"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent sixteen years in life insurance, starting as an advisor in a small town, then building a large agency and training hundreds of advisors across India. You now coach life insurance advisors one-to-one.",
+    "tone": "Warm, practical and encouraging. Uses everyday Indian examples with premiums and covers in rupees, lakh and crore.",
+    "starter_questions": [
+      "How can I pitch term insurance to housewives?",
+      "How much cover does my customer need?",
+      "How do I handle 'I'll think about it'?",
+      "What can't I say while selling?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "id": "health-insurance-advisor",
+  "industry": "Insurance",
+  "profile": {
+    "title": "Health Insurance Advisor",
+    "seniority": "entry to mid level",
+    "summary": "Advises individuals and families on retail health cover, matching plans and sum insured to their needs and supporting them through claims.",
+    "responsibilities": [
+      "Discover family health needs, budgets and existing cover",
+      "Recommend suitable plans, sum insured, riders and top-ups",
+      "Explain waiting periods, room rent limits, co-pay and exclusions clearly",
+      "Handle objections on premium, employer cover and claim fears",
+      "Complete proposals with accurate medical and lifestyle disclosure",
+      "Support customers through cashless and reimbursement claims and renewals"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Health needs discovery",
+      "description": "Mapping family composition, age, city, existing cover, health history and budget before recommending anything.",
+      "proficiency": "Can run a structured fact-find with a family and spot gaps in current cover.",
+      "icon": "people"
+    },
+    {
+      "name": "Sum insured sizing",
+      "description": "Choosing cover using city hospital costs, medical inflation and family risk profile.",
+      "proficiency": "Can justify a sum insured in rupees and lakh to a customer with a worked example.",
+      "icon": "calculator"
+    },
+    {
+      "name": "Explaining policy terms simply",
+      "description": "Making waiting periods, room rent limits, co-pay, sub-limits and deductibles easy to understand.",
+      "proficiency": "Can explain any clause in plain language in under a minute using a real hospital bill.",
+      "icon": "book"
+    },
+    {
+      "name": "Plan comparison and selection",
+      "description": "Comparing indemnity, fixed benefit, floater, individual and critical illness plans on features, not just premium.",
+      "proficiency": "Can build a fair side-by-side comparison and recommend one plan with reasons.",
+      "icon": "scale"
+    },
+    {
+      "name": "Selling to seniors and parents",
+      "description": "Handling higher premiums, pre-existing diseases, co-pay options and super top-ups for older customers.",
+      "proficiency": "Can structure a workable cover for parents aged sixty and above within a limited budget.",
+      "icon": "shield"
+    },
+    {
+      "name": "Objection handling",
+      "description": "Responding to 'office cover is enough', 'premium is too high' and 'I never fall sick' with empathy and facts.",
+      "proficiency": "Can turn the common objections into a need conversation without pressure.",
+      "icon": "chat"
+    },
+    {
+      "name": "IRDAI-compliant selling",
+      "description": "Fair disclosure, no mis-selling, accurate benefit illustration, free-look period and grievance process.",
+      "proficiency": "Can sell confidently while avoiding mis-selling and misleading claims.",
+      "icon": "alert"
+    },
+    {
+      "name": "Claims support and renewals",
+      "description": "Guiding cashless and reimbursement claims, portability, no-claim bonus and renewal reviews.",
+      "proficiency": "Can support a family through a claim and use renewals to rebuild the cover.",
+      "icon": "pulse"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "IRDAI compliance for insurance sales",
+      "documents": [
+        "shared/kb/kb_irdai_compliance_for_sales.md"
+      ],
+      "icon": "shield"
+    },
+    {
+      "name": "Term insurance: product and selling",
+      "documents": [
+        "shared/kb/kb_term_insurance_product_and_selling.md"
+      ],
+      "icon": "book"
+    },
+    {
+      "name": "Health insurance products and selling",
+      "documents": [
+        "kb/kb_01_health_insurance_products_and_selling.md"
+      ],
+      "icon": "pulse"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent sixteen years in retail health insurance, selling family floaters, senior citizen plans and top-ups, and later training advisor teams at insurers and brokers in Mumbai and Pune. You now coach health insurance advisors one-to-one.",
+    "tone": "Warm, practical and plain-spoken. Uses realistic Indian family examples with amounts in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I explain waiting periods simply?",
+      "My customer says office cover is enough. What do I say?",
+      "How much sum insured should a family in Pune take?",
+      "How do I sell a super top-up?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

@@ -21,21 +21,25 @@ There are two ways to run it. Both use the same screens and the same runtime (`s
 
 ```powershell
 cd D:\Turo\Devwork\Accenture\role-coach-app
-copy env.example .env      # first time: paste your Spatius API key into .env
+copy env.example .env                                         # first time
+copy public\coach-config.example.js public\coach-config.js    # first time: paste your Spatius values
 node server.mjs            # → http://localhost:3000
 ```
 
 No `npm install` is needed. Open `/api/health` to check the setup; `missing` should be `[]`. To review the screens without the avatar or voice, set `MOCK_MODE=1`.
 
-`.env` settings: `ELEVENLABS_AGENT_ID`, `AGENT_SAMPLE_RATE` (must match the agent's TTS output, currently 16000), `SPATIUS_APP_ID`, `SPATIUS_API_KEY`, `SPATIUS_AVATAR_ID`, `SPATIUS_REGION` (`ap-northeast`), `CONTENT_BASE_URL` / `CONTENT_SAS` (optional, for Azure Blob), `MOCK_MODE`.
+`.env` settings: `ELEVENLABS_AGENT_ID`, `AGENT_SAMPLE_RATE` (must match the agent's TTS output, currently 16000), `CONTENT_BASE_URL` / `CONTENT_SAS` (optional, for Azure Blob), `MOCK_MODE`.
 
 ## Single-file version
 
 Rebuild it after changing content or code:
 ```powershell
-python standalone/build.py --agent <agentId> --spatius-app <appId> --spatius-key <key> --spatius-avatar <avatarId>
+python standalone/build.py --agent <agentId>
 ```
-This writes `role-coach.html`, which is about 6 MB because it includes the Spatius engine.
+This writes `role-coach.html`, which is about 6 MB because it includes the Spatius engine. The Spatius values come from `public/coach-config.js`, so the built file contains the key: do not commit or share it publicly unless the key is restricted.
+
+## Spatius config (browser side)
+`public/coach-config.js` holds the Spatius app id, API key, avatar id and region. It is gitignored; `public/coach-config.example.js` is the committed template. The browser fetches its Spatius session token directly with this key, in both the server and single-file versions. The server never sees the key.
 
 ## ElevenLabs agent settings
 - **System prompt:** `agent/system_prompt_template.md`.

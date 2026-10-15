@@ -101,16 +101,40 @@
       ]
     },
     {
-      "id": "energy",
-      "name": "Energy & Utilities",
-      "icon": "leaf",
-      "theme": "green",
+      "id": "insurance",
+      "name": "Insurance",
+      "icon": "shield",
+      "theme": "indigo",
       "roles": [
         {
-          "id": "grid-operations-lead",
-          "name": "Grid Operations Lead",
-          "blurb": "Keep the grid reliable and resilient.",
+          "id": "life-insurance-advisor",
+          "name": "Life Insurance Advisor",
+          "blurb": "Help families choose the right protection and savings plans.",
+          "icon": "shield"
+        },
+        {
+          "id": "bancassurance-rm",
+          "name": "Bancassurance Relationship Manager",
+          "blurb": "Offer the right insurance to bank customers, the right way.",
+          "icon": "building"
+        },
+        {
+          "id": "agency-development-manager",
+          "name": "Agency Development Manager",
+          "blurb": "Recruit, activate and coach a high-quality agency team.",
+          "icon": "people"
+        },
+        {
+          "id": "health-insurance-advisor",
+          "name": "Health Insurance Advisor",
+          "blurb": "Help individuals and families pick the right health cover.",
           "icon": "pulse"
+        },
+        {
+          "id": "digital-insurance-advisor",
+          "name": "Digital Insurance Advisor",
+          "blurb": "Sell term and health cover over phone and online journeys.",
+          "icon": "chat"
         }
       ]
     }

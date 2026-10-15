@@ -3,7 +3,7 @@
 //
 // - Serves the UI (public/ + the shared runtime in standalone/spatius.js)
 // - Serves catalogue + role configs (content/ locally, or CONTENT_BASE_URL e.g. Azure Blob)
-// - Mints Spatius session tokens server-side (the Spatius API key never reaches the browser)
+// - The Spatius values live in public/coach-config.js (browser side); the browser fetches its own Spatius session token
 
 import http from "node:http";
 import { readFile, stat } from "node:fs/promises";
@@ -17,11 +17,10 @@ loadEnv(path.join(ROOT, ".env"));
 
 const PORT = Number(process.env.PORT || 3000);
 const PREVIEW = process.env.MOCK_MODE === "1";
-const REGION = process.env.SPATIUS_REGION || "ap-northeast";
 const CONTENT_BASE_URL = (process.env.CONTENT_BASE_URL || "").replace(/\/$/, "");
 const CONTENT_DIR = path.join(ROOT, "content");
 const PUBLIC_DIR = path.join(ROOT, "public");
-const REQUIRED = ["ELEVENLABS_AGENT_ID", "SPATIUS_APP_ID", "SPATIUS_API_KEY", "SPATIUS_AVATAR_ID"];
+const REQUIRED = ["ELEVENLABS_AGENT_ID"];
 
 // ---------- content reader: local folder or blob URL ----------
 async function readText(rel) {
@@ -54,32 +53,16 @@ async function bundle() {
 // ---------- API ----------
 async function api(req, res, url) {
   if (url.pathname === "/api/health") {
-    return json(res, 200, { ok: true, preview: PREVIEW, missing: REQUIRED.filter((k) => !process.env[k]), content: CONTENT_BASE_URL || "local", region: REGION });
+    return json(res, 200, { ok: true, preview: PREVIEW, missing: REQUIRED.filter((k) => !process.env[k]), content: CONTENT_BASE_URL || "local" });
   }
 
-  // Public runtime config (no secrets)
+  // Public runtime config (no Spatius values: those come from public/coach-config.js)
   if (url.pathname === "/api/config") {
     return json(res, 200, {
       elevenlabsAgentId: process.env.ELEVENLABS_AGENT_ID || "",
       agentSampleRate: Number(process.env.AGENT_SAMPLE_RATE || 16000),
-      spatiusAppId: process.env.SPATIUS_APP_ID || "",
-      spatiusAvatarId: process.env.SPATIUS_AVATAR_ID || "",
-      spatiusRegion: REGION,
       previewMode: PREVIEW,
     });
-  }
-
-  // Spatius session token (API key stays here)
-  if (url.pathname === "/api/spatius-token" && req.method === "POST") {
-    if (!process.env.SPATIUS_API_KEY) return json(res, 500, { error: "SPATIUS_API_KEY is missing in .env" });
-    const r = await fetch(`https://console.${REGION}.spatius.ai/v1/console/session-tokens`, {
-      method: "POST",
-      headers: { "X-API-Key": process.env.SPATIUS_API_KEY, "Content-Type": "application/json" },
-      body: JSON.stringify({ expireAt: Math.floor(Date.now() / 1000) + 3600 }),
-    });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok || !j.sessionToken) return json(res, 502, { error: `Spatius token ${r.status}: ${j.error?.message || JSON.stringify(j).slice(0, 200)}` });
-    return json(res, 200, { sessionToken: j.sessionToken });
   }
 
   // Catalogue (marks roles that actually have a config as available)
@@ -119,6 +102,10 @@ async function serveStatic(req, res, url) {
   if (p === "/bundle.js") {
     res.writeHead(200, { "Content-Type": "text/javascript", "Cache-Control": "no-cache" });
     return res.end(await bundle());
+  }
+  if (p === "/coach-config.js" && !(await stat(path.join(PUBLIC_DIR, "coach-config.js")).then(() => true, () => false))) {
+    res.writeHead(200, { "Content-Type": "text/javascript", "Cache-Control": "no-cache" });
+    return res.end("window.COACH_CONFIG = {}; console.warn('coach-config.js not found: copy public/coach-config.example.js to public/coach-config.js');");
   }
   if (p === "/" || !path.extname(p)) p = "/index.html"; // SPA fallback
   const file = path.join(PUBLIC_DIR, path.normalize(p));

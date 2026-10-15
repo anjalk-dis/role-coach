@@ -3,3 +3,5 @@ node_modules/
 # Built output: build.py bakes API keys into this file. Never commit it.
 role-coach.html
 standalone/*.html
+# Spatius key lives in the browser config; never commit it (use coach-config.example.js)
+public/coach-config.js

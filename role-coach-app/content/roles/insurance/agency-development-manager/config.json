@@ -1,0 +1,103 @@
+{
+  "id": "agency-development-manager",
+  "industry": "Insurance",
+  "profile": {
+    "title": "Agency Development Manager",
+    "seniority": "mid to senior level",
+    "summary": "Recruits, licenses, activates and coaches a team of life insurance agents to build a productive, persistent and compliant agency.",
+    "responsibilities": [
+      "Recruit and select agents from the right sources and profiles",
+      "Get recruits trained, examined and licensed",
+      "Activate new agents in their first 90 days with a clear plan",
+      "Coach through joint field work, call reviews and weekly activity management",
+      "Track persistency, quality of business and agent retention",
+      "Supervise compliance and run motivation and contests without encouraging mis-selling"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Recruitment and selection",
+      "description": "Identifying the right agent profile, sourcing candidates and selecting for stickiness rather than headcount.",
+      "proficiency": "Can build a recruitment funnel and select agents likely to stay and produce.",
+      "icon": "people"
+    },
+    {
+      "name": "Licensing and training",
+      "description": "Guiding recruits through the pre-licensing exam, IRDAI-mandated training and onboarding.",
+      "proficiency": "Can take a recruit from interview to licence on a planned timeline.",
+      "icon": "book"
+    },
+    {
+      "name": "90-day activation",
+      "description": "Setting activity targets, first cases and milestones that turn a licensed agent into an active one.",
+      "proficiency": "Can run a structured activation plan that lifts first-90-day activation rates.",
+      "icon": "target"
+    },
+    {
+      "name": "Joint field work and coaching",
+      "description": "Accompanying agents on calls, modelling the sales cycle and giving specific feedback afterwards.",
+      "proficiency": "Can run a joint call and give feedback that changes agent behaviour.",
+      "icon": "chat"
+    },
+    {
+      "name": "Activity and performance management",
+      "description": "Using weekly activity, pipeline and productivity reviews to manage agents fairly and early.",
+      "proficiency": "Can spot a stalling agent from activity data and intervene within a week.",
+      "icon": "chart"
+    },
+    {
+      "name": "Persistency and quality of business",
+      "description": "Managing 13th and 61st month persistency, lapses and early claims by driving suitable sales and servicing.",
+      "proficiency": "Can diagnose persistency leaks by agent and fix them.",
+      "icon": "pulse"
+    },
+    {
+      "name": "Compliance supervision of agents",
+      "description": "Monitoring agent conduct, term selling quality, disclosures and complaints, and acting on red flags.",
+      "proficiency": "Can supervise a team for mis-selling and take corrective action early.",
+      "icon": "scale"
+    },
+    {
+      "name": "Motivation and incentives",
+      "description": "Designing contests, recognition and meetings that lift activity without encouraging mis-selling or churn.",
+      "proficiency": "Can run a contest that rewards quality and persistency, not just premium.",
+      "icon": "coins"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "IRDAI compliance for insurance sales",
+      "documents": [
+        "shared/kb/kb_irdai_compliance_for_sales.md"
+      ],
+      "icon": "shield"
+    },
+    {
+      "name": "Term insurance: product and selling",
+      "documents": [
+        "shared/kb/kb_term_insurance_product_and_selling.md"
+      ],
+      "icon": "book"
+    },
+    {
+      "name": "Building and coaching an agency team",
+      "documents": [
+        "kb/kb_01_building_and_coaching_an_agency_team.md"
+      ],
+      "icon": "people"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent seventeen years in life insurance distribution, rising from agent to agency leader and building teams of over two hundred advisors. You now coach agency development managers one-to-one.",
+    "tone": "Warm, direct and experienced. Uses field examples with premiums, commissions and targets in rupees, lakh and crore.",
+    "starter_questions": [
+      "Who should I recruit as an agent?",
+      "How do I activate a new agent in 90 days?",
+      "How do I run a good joint call?",
+      "How do I run a contest without encouraging mis-selling?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "id": "digital-insurance-advisor",
+  "industry": "Insurance",
+  "profile": {
+    "title": "Tele-sales / Digital Insurance Advisor",
+    "seniority": "entry to mid level",
+    "summary": "Sells term and health insurance to customers over phone, video and online journeys, guiding them from first call to policy issuance.",
+    "responsibilities": [
+      "Call and message leads with permission and a clear purpose",
+      "Discover needs and explain term and health plans without visuals",
+      "Guide customers through online applications, e-KYC and payment",
+      "Coordinate video or tele medicals and verification calls",
+      "Follow up on drop-offs and pending issuance with a disciplined cadence",
+      "Keep every call compliant, recorded and accurately documented"
+    ]
+  },
+  "skills": [
+    {
+      "name": "Call opening and permission",
+      "description": "Opening a call with identity, purpose and consent, and earning the next two minutes.",
+      "proficiency": "Can open a cold or warm call without sounding pushy and keep the customer on the line.",
+      "icon": "chat"
+    },
+    {
+      "name": "Remote need discovery",
+      "description": "Asking short, sequenced questions on dependants, income, loans and existing cover over a call.",
+      "proficiency": "Can complete a useful fact-find in under five minutes on the phone.",
+      "icon": "target"
+    },
+    {
+      "name": "Explaining term and health on call",
+      "description": "Describing term cover, health cover and key exclusions in plain spoken language with simple rupee examples.",
+      "proficiency": "Can explain term insurance in two minutes and a health plan in three without jargon.",
+      "icon": "book"
+    },
+    {
+      "name": "Guiding online applications",
+      "description": "Walking customers through proposal forms, e-KYC, nominee details, payment and e-mandate steps.",
+      "proficiency": "Can stay on a call while a customer completes the journey and fix common errors.",
+      "icon": "calculator"
+    },
+    {
+      "name": "Tele and video medicals",
+      "description": "Preparing customers for medical tests, tele-underwriting questions and accurate disclosure.",
+      "proficiency": "Can set expectations for medicals and keep customers from dropping at that stage.",
+      "icon": "pulse"
+    },
+    {
+      "name": "Drop-off recovery and follow-up",
+      "description": "Recovering abandoned journeys with timely, relevant follow-ups across call, WhatsApp and SMS.",
+      "proficiency": "Can diagnose why a customer dropped and re-engage in a respectful cadence.",
+      "icon": "alert"
+    },
+    {
+      "name": "IRDAI-compliant remote selling",
+      "description": "Call recording, consent and DND rules, mandatory disclosures, no misleading claims and verification calls.",
+      "proficiency": "Can run a fully compliant sales call and spot mis-selling risks before they happen.",
+      "icon": "shield"
+    },
+    {
+      "name": "Funnel metrics and productivity",
+      "description": "Reading contact rate, conversion, issuance and persistency to improve daily performance.",
+      "proficiency": "Can diagnose their own funnel and pick one change that lifts issuance.",
+      "icon": "chart"
+    }
+  ],
+  "knowledge_areas": [
+    {
+      "name": "IRDAI compliance for insurance sales",
+      "documents": [
+        "shared/kb/kb_irdai_compliance_for_sales.md"
+      ],
+      "icon": "shield"
+    },
+    {
+      "name": "Term insurance: product and selling",
+      "documents": [
+        "shared/kb/kb_term_insurance_product_and_selling.md"
+      ],
+      "icon": "book"
+    },
+    {
+      "name": "Selling insurance over phone and digital journeys",
+      "documents": [
+        "kb/kb_01_selling_insurance_phone_digital.md"
+      ],
+      "icon": "chat"
+    }
+  ],
+  "persona": {
+    "coach_name": "Maya",
+    "background": "You have spent fourteen years in insurance tele-sales and digital distribution, as a top-performing caller, a floor team leader and later a sales trainer at insurers and online platforms. You now coach tele-sales and digital insurance advisors one-to-one.",
+    "tone": "Energetic, warm and direct. Uses realistic Indian call examples with amounts in rupees, lakh and crore.",
+    "starter_questions": [
+      "How do I open a cold call without sounding pushy?",
+      "How do I explain term insurance in two minutes on a call?",
+      "A customer dropped off at the payment page. What now?",
+      "What must I disclose on a sales call?"
+    ],
+    "voice_id": "REPLACE_WITH_ELEVENLABS_VOICE_ID",
+    "avatar_id": "REPLACE_LATER"
+  }
+}

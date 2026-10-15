@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Build a single self-contained role-coach.html (no server needed).
 
-  python standalone/build.py [--key LIVEAVATAR_KEY] [--agent AGENT_ID] [--out role-coach.html]
+  python standalone/build.py [--agent AGENT_ID] [--out role-coach.html]
+
+Spatius values come from public/coach-config.js (copy coach-config.example.js and fill it in); they are embedded in the output.
 
 Embeds: UI, styles, images, Spatius + ElevenLabs SDKs, catalogue, role configs and knowledge docs.
 """
@@ -12,9 +14,6 @@ PUB, CONTENT = ROOT / "public", ROOT / "content"
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--agent", default="")
-ap.add_argument("--spatius-app", default="")
-ap.add_argument("--spatius-key", default="")
-ap.add_argument("--spatius-avatar", default="")
 ap.add_argument("--out", default=str(ROOT / "role-coach.html"))
 a = ap.parse_args()
 
@@ -30,7 +29,8 @@ for cfg_path in sorted((CONTENT / "roles").glob("*/*/config.json")):
     kb = {}
     for area in cfg["knowledge_areas"]:
         for doc in area["documents"]:
-            kb[doc] = (role_dir / doc).read_text("utf-8")
+            src = (role_dir.parent / "_shared" / doc[len("shared/"):]) if doc.startswith("shared/") else (role_dir / doc)
+            kb[doc] = src.read_text("utf-8")
     roles[f"{role_dir.parent.name}/{role_dir.name}"] = {"config": cfg, "kb": kb}
 content_json = json.dumps({"catalogue": catalogue, "roles": roles}, ensure_ascii=False).replace("</", "<\\/")
 
@@ -56,7 +56,7 @@ app = re.sub(r'const r = await fetch\("/api/session".*?\n\s*const data = await r
 assert "fetch(\"/api" not in app and "fetch(`/api" not in app, "unreplaced API call"
 
 standalone = (ROOT / "standalone" / "spatius.js").read_text("utf-8")
-standalone = standalone.replace("__ELEVENLABS_AGENT_ID__", a.agent or "__ELEVENLABS_AGENT_ID__").replace("__SPATIUS_APP_ID__", a.spatius_app or "__SPATIUS_APP_ID__").replace("__SPATIUS_API_KEY__", a.spatius_key or "__SPATIUS_API_KEY__").replace("__SPATIUS_AVATAR_ID__", a.spatius_avatar or "")
+standalone = standalone.replace("__ELEVENLABS_AGENT_ID__", a.agent or "__ELEVENLABS_AGENT_ID__")
 # app.js ends with route(); keep it last
 app_body = app.rstrip()
 assert app_body.endswith("route();")
@@ -67,14 +67,22 @@ MIMES = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".web
 css = (PUB / "styles.css").read_text("utf-8")
 css = re.sub(r'url\("/assets/([^"]+)"\)', lambda m: 'url("%s")' % data_uri(PUB / "assets" / m.group(1), MIMES[pathlib.Path(m.group(1)).suffix.lower()]), css)
 
+# ---- browser-side Spatius config (public/coach-config.js) ----
+cfg_file = PUB / "coach-config.js"
+if not cfg_file.exists():
+    cfg_file = PUB / "coach-config.example.js"
+    print("WARNING: public/coach-config.js not found; embedding the example placeholders (avatar will not connect).")
+coach_config = cfg_file.read_text("utf-8")
+assert "</script" not in coach_config.lower()
+
 # ---- html ----
-logo = data_uri(PUB / "assets" / "disprz-logo-light.svg", "image/svg+xml")
 html = (PUB / "index.html").read_text("utf-8")
 html = html.replace('<link rel="stylesheet" href="/styles.css" />', f"<style>{css}</style>")
-html = html.replace('src="/assets/disprz-logo-light.svg"', f'src="{logo}"')
+html = re.sub(r'src="/assets/([^"]+)"', lambda m: 'src="%s"' % data_uri(PUB / "assets" / m.group(1), MIMES[pathlib.Path(m.group(1)).suffix.lower()]), html)
 html = re.sub(r"\s*<!-- runtime:start -->.*?<!-- runtime:end -->", "\n__RUNTIME__", html, flags=re.S)
 html = html.replace("__RUNTIME__",
   f'<script type="application/json" id="content-data">{content_json}</script>\n'
+  f"<script>{coach_config}</script>\n"
   f"<script>{wasm_shim}</script>\n<script>{sdk}</script>\n<script type=\"module\">{js}</script>")
 assert 'src="/bundle.js"' not in html and 'wasm-shim.js' not in html and 'href="/styles.css"' not in html and 'src="/assets/' not in html and 'url("/assets/' not in html
 

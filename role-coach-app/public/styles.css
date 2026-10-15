@@ -502,7 +502,7 @@ svg { display: block; }
 .img-healthcare { --card-img: url("/assets/industry-healthcare.jpg"); }
 .img-consumer-retail { --card-img: url("/assets/industry-consumer-retail.jpg"); }
 .img-manufacturing { --card-img: url("/assets/industry-manufacturing.jpg"); }
-.img-energy { --card-img: url("/assets/industry-energy.jpg"); }
+.img-insurance { --card-img: url("/assets/industry-insurance.jpg"); }
 
 /* available industry: violet border, soft glow, filled arrow */
 .industry-card:not(:disabled) {

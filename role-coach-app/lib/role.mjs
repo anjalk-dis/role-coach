@@ -51,7 +51,9 @@ export async function loadRole(readText, industryId, roleId) {
   const pieces = [];
   for (const area of knowledge_areas) {
     for (const doc of area.documents) {
-      const text = (await readText(`${base}/${doc}`)).trim();
+      // "shared/..." docs live in roles/<industry>/_shared/ and are reused across that industry's roles
+      const docPath = doc.startsWith("shared/") ? `roles/${industryId}/_shared/${doc.slice(7)}` : `${base}/${doc}`;
+      const text = (await readText(docPath)).trim();
       pieces.push(`=== KNOWLEDGE AREA: ${area.name} ===\n\n${text}`);
     }
   }
