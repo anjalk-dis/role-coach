@@ -1,81 +1,71 @@
-# Turo Role Coach: Accenture Innovation Hub
+# Turo Role Coach: Disprz
 
-Three screens (**Industry → Role → Talk to your coach**). One role-agnostic ElevenLabs agent, with a LiveAvatar (HeyGen) face rendered over WebRTC.
+Three screens (**Industry → Role → Talk to your coach**). One role-agnostic **ElevenLabs agent** is the brain and voice. The **Spatius** 3D avatar is Maya's face: it's rendered in the browser and lip-synced to the agent's audio.
 
 ```
-Browser ──/api/session──▶ server.mjs ──POST /v1/sessions/token (LITE + elevenlabs_agent_config)──▶ LiveAvatar
-   │                         │  └─ dynamic_variables (short role fields: name, title, skills…)
-   │◀── session_token + contextual_updates (ROLE BRIEF + ROLE KNOWLEDGE chunks)
-   └─ ElevenLabsAgentSession.start() → video + mic → sendContextualUpdate(...) → sendUserMessage on skill taps
+Browser ── ElevenLabs agent (WebSocket): mic in, Maya's voice out (agent's own speaker muted)
+   │          ├─ dynamic variables: short role fields ({{role_title}}, {{skills}} …)
+   │          └─ context updates: ROLE BRIEF + ROLE KNOWLEDGE (the role's KB docs)
+   └─ Maya's voice (PCM) ──▶ Spatius AvatarKit ──▶ lip-synced avatar + audio playback
 ```
 
-**Why the knowledge goes in as context updates:** LiveAvatar caps each dynamic variable at about 1,000 characters. So the role's knowledge (about 35k characters) and the skill details go into the live session as silent `contextual_update` messages straight after connecting. Short fields still go in as `{{variables}}`.
+There are two ways to run it. Both use the same screens and the same runtime (`standalone/spatius.js`).
 
-## Run it (Windows, Node 18+)
+| | `role-coach.html` (single file) | `node server.mjs` (server) |
+|---|---|---|
+| How to run | Double-click to open it in Chrome | `node server.mjs`, then http://localhost:3000 |
+| Keys | Embedded in the file | Kept in `.env` on the server; the browser never sees the Spatius key |
+| Content | Baked in at build time | Read live from `content/` or Azure Blob, so a new role appears without rebuilding |
+
+## Server version
 
 ```powershell
 cd D:\Turo\Devwork\Accenture\role-coach-app
-copy env.example .env        # first time only, then paste your LiveAvatar key into .env
-node server.mjs
-# open http://localhost:3000 in Chrome
+copy env.example .env      # first time: paste your Spatius API key into .env
+node server.mjs            # → http://localhost:3000
 ```
 
-No `npm install` is needed. The LiveAvatar SDK is bundled in `public/vendor/`.
+No `npm install` is needed. Open `/api/health` to check the setup; `missing` should be `[]`. To review the screens without the avatar or voice, set `MOCK_MODE=1`.
 
-To review the UI without an avatar or voice, set `MOCK_MODE=1` in `.env`.
+`.env` settings: `ELEVENLABS_AGENT_ID`, `AGENT_SAMPLE_RATE` (must match the agent's TTS output, currently 16000), `SPATIUS_APP_ID`, `SPATIUS_API_KEY`, `SPATIUS_AVATAR_ID`, `SPATIUS_REGION` (`ap-northeast`), `CONTENT_BASE_URL` / `CONTENT_SAS` (optional, for Azure Blob), `MOCK_MODE`.
 
-## One-time setup (about 15 minutes)
+## Single-file version
 
-### 1. ElevenLabs agent (`agent_2401m4x3htaxe3gr17aarh8enb5c`)
-1. **System prompt:** paste the contents of `agent/system_prompt_template.md`. This replaces the earlier version: `{{role_knowledge}}` is gone, and knowledge now arrives as context updates.
-2. **First message:**
-   `Hi, I'm {{coach_name}}, and I'll be your {{role_title}} coach today. Tell me a little about what you do, and I'll suggest where we start.`
-3. **Audio formats (required by LiveAvatar):**
-   - Voice tab → TTS output format: **PCM 24000 Hz**
-   - Advanced tab → User input audio format: **PCM 24000 Hz**
-4. Knowledge base / RAG: off.
-5. Dashboard test values for `{{…}}` variables are only needed for the **Test AI agent** button.
-
-### 2. Register your ElevenLabs API key with LiveAvatar
-Create an ElevenLabs API key (Settings → API Keys) with **convai_read, user_read, voices_read**. Free-tier keys are not supported. Then run:
+Rebuild it after changing content or code:
 ```powershell
-node scripts/setup-elevenlabs-secret.mjs <ELEVENLABS_API_KEY>
+python standalone/build.py --agent <agentId> --spatius-app <appId> --spatius-key <key> --spatius-avatar <avatarId>
 ```
-This saves `ELEVENLABS_SECRET_ID` into `.env`.
+This writes `role-coach.html`, which is about 6 MB because it includes the Spatius engine.
 
-### 3. Pick the avatar
-```powershell
-node scripts/list-avatars.mjs                 # lists your avatars + public ones
-node scripts/list-avatars.mjs <avatarId>      # saves LIVEAVATAR_AVATAR_ID to .env
-```
-A role can override the avatar with `persona.avatar_id`, and the voice with `persona.voice_id` (an ElevenLabs voice id), in its `config.json`.
+## ElevenLabs agent settings
+- **System prompt:** `agent/system_prompt_template.md`.
+- **First message:** use `{{coach_name}}` and `{{role_title}}`.
+- **TTS output format:** PCM, matching `AGENT_SAMPLE_RATE`. 24000 Hz sounds better than 16000; if you change it, update the setting here and rebuild.
+- **Authentication:** off. The browser connects with the agent ID.
+- **Knowledge base / RAG:** off. Knowledge arrives as context updates instead.
 
-### 4. Check
-Open `http://localhost:3000/api/health`. `missing` should be `[]`.
+## Add a role
+1. Create `content/roles/<industry>/<role>/config.json` and `kb/*.md`. Copy an existing role as a template.
+2. Add the role to `content/catalogue.json`.
+3. Server version: go back to the industry screen and the role appears. Single file: rebuild.
 
-## Add a role (no code change)
-1. Create `content/roles/<industry>/<role>/config.json` and `kb/*.md`. Copy `bfsi/credit-risk-manager` as a template.
-2. Add it to `content/catalogue.json` under its industry. Roles without a config show as **Coming soon**.
-3. Go back to the industry screen. The catalogue reloads, so the role appears without a page refresh.
-
-To serve content from Azure Blob instead, set `CONTENT_BASE_URL`, plus `CONTENT_SAS` if the container is private, in `.env`. Use the same folder layout.
-
-## Kiosk behaviour
-- Mic permission is requested when the visitor clicks **Meet your coach**, which also unlocks audio.
-- Tapping a skill, knowledge area or starter question sends it to Maya as a spoken-style user message.
-- The session ends after **90 s** with no learner speech. The end screen returns to the start after **20 s**.
-- **Restart** (↻) starts a fresh conversation for the same role.
-
-## Security
-`.env` holds the LiveAvatar API key. It stays on the server and is never sent to the browser. Don't commit `.env`; it's already listed in `.gitignore`. Rotate the LiveAvatar key after the event, because it has been shared in chat.
+## Kiosk notes
+- Maya loads idle. Clicking **Start conversation** unlocks audio and the microphone; Chrome requires that click.
+- Use a **headset**. With laptop speakers, the mic can pick up Maya and she interrupts herself.
+- The session ends after 90 s of silence, and the end screen returns to the start after 20 s.
+- To stop Chrome asking for the mic each time, click the icon at the left of the address bar and set Microphone to **Allow**.
 
 ## Files
 ```
-server.mjs                 zero-dependency server (static + API + token minting)
-lib/role.mjs               config + kb → dynamic variables + context updates
-lib/env.mjs                .env loader
-public/                    index.html, app.js, styles.css, assets/, vendor/liveavatar-sdk.esm.js
-content/                   catalogue.json + roles/<industry>/<role>/{config.json, kb/}
-agent/                     system prompt template + test script for the ElevenLabs agent
-scripts/                   setup-elevenlabs-secret.mjs, list-avatars.mjs
+server.mjs                  zero-dependency server: static files, /bundle.js, role API, Spatius token
+lib/role.mjs, lib/env.mjs   role → dynamic variables + context updates; .env loader
+public/                     index.html, app.js (screens), styles.css, assets/, vendor/ (Spatius + ElevenLabs bundle, WASM)
+standalone/spatius.js       shared runtime: Spatius avatar + ElevenLabs agent session controller
+standalone/build.py         builds the single-file role-coach.html
+content/                    catalogue.json + roles/<industry>/<role>/{config.json, kb/}
+agent/                      ElevenLabs system prompt template + test script
 ```
+`scripts/` and `public/vendor/liveavatar-sdk.esm.js` were for the old HeyGen version. They're no longer used and can be deleted.
+
+## Security
+The single file contains the Spatius API key, so keep it on the demo machine. Rotate the keys that were shared in chat after the event: Spatius, LiveAvatar and ElevenLabs.

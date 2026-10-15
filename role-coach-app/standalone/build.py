@@ -48,7 +48,7 @@ app = (PUB / "app.js").read_text("utf-8")
 app = re.sub(r"import\s*\{[^}]*\}\s*from\s*\"/vendor/liveavatar-sdk\.esm\.js\";", "", app, count=1)
 app = app.replace("if (autoStartNext) { autoStartNext = false; ctl.start(); }\n  else ctl.showStart();", "autoStartNext = false;\n  ctl.showStart();")
 assert "else ctl.showStart" not in app
-app = app[: app.index("function createSessionController(")] + "route();"
+if "function createSessionController(" in app: app = app[: app.index("function createSessionController(")] + "route();"
 app = app.replace('catalogue = await (await fetch("/api/catalogue", { cache: "no-store" })).json();', "catalogue = buildCatalogue();")
 app = app.replace("const role = await (await fetch(`/api/roles/${industryId}/${roleId}`)).json();", "const role = loadRoleLocal(industryId, roleId).publicRole;")
 app = re.sub(r'const r = await fetch\("/api/session".*?\n\s*const data = await r\.json\(\);\n\s*if \(!r\.ok\).*?\n',
@@ -62,27 +62,21 @@ app_body = app.rstrip()
 assert app_body.endswith("route();")
 js = app_body[: -len("route();")] + "\n" + standalone + "\nroute();\n"
 
-# ---- css ----
-hero = data_uri(PUB / "assets" / "hero.jpg", "image/jpeg")
-css = (PUB / "styles.css").read_text("utf-8").replace('url("/assets/hero.jpg")', f'url("{hero}")')
-css += """
-.avatar-box { position: absolute !important; inset: 0 !important; z-index: 0; opacity: 0; transition: opacity .6s; background: #0c0718 url("__OFFICE_BG__") center / cover no-repeat; }
-.stage.live .avatar-box, .stage.avatar-ready .avatar-box { opacity: 1; }
-.avatar-box canvas { width: 100% !important; height: 100% !important; display: block; }
-.stage .veil.soft { background: linear-gradient(180deg, rgba(7,4,15,0) 35%, rgba(7,4,15,.85) 100%); backdrop-filter: none; align-items: end; padding-bottom: 140px; z-index: 3; }\n.stage .veil { z-index: 3; }\n.stage .veil.soft h2 { text-shadow: 0 2px 12px rgba(0,0,0,.6); }
-"""
-for _p in sorted((PUB / "assets" / "industries").glob("*.jpg")):
-    css = css.replace(f'url("/assets/industries/{_p.name}")', f'url("{data_uri(_p, "image/jpeg")}")')
-css = css.replace("__OFFICE_BG__", data_uri(PUB / "assets" / "office-bg.webp", "image/webp"))
+# ---- css (inline every /assets/... image as a data URI) ----
+MIMES = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp", ".svg": "image/svg+xml"}
+css = (PUB / "styles.css").read_text("utf-8")
+css = re.sub(r'url\("/assets/([^"]+)"\)', lambda m: 'url("%s")' % data_uri(PUB / "assets" / m.group(1), MIMES[pathlib.Path(m.group(1)).suffix.lower()]), css)
+
 # ---- html ----
-logo = data_uri(PUB / "assets" / "accenture-logo.png", "image/png")
+logo = data_uri(PUB / "assets" / "disprz-logo-light.svg", "image/svg+xml")
 html = (PUB / "index.html").read_text("utf-8")
 html = html.replace('<link rel="stylesheet" href="/styles.css" />', f"<style>{css}</style>")
-html = html.replace('src="/assets/accenture-logo.png"', f'src="{logo}"')
-html = html.replace('<script type="module" src="/app.js"></script>',
+html = html.replace('src="/assets/disprz-logo-light.svg"', f'src="{logo}"')
+html = re.sub(r"\s*<!-- runtime:start -->.*?<!-- runtime:end -->", "\n__RUNTIME__", html, flags=re.S)
+html = html.replace("__RUNTIME__",
   f'<script type="application/json" id="content-data">{content_json}</script>\n'
   f"<script>{wasm_shim}</script>\n<script>{sdk}</script>\n<script type=\"module\">{js}</script>")
-assert 'src="/app.js"' not in html and 'href="/styles.css"' not in html and 'src="/assets/' not in html and 'url("/assets/' not in html
+assert 'src="/bundle.js"' not in html and 'wasm-shim.js' not in html and 'href="/styles.css"' not in html and 'src="/assets/' not in html and 'url("/assets/' not in html
 
 pathlib.Path(a.out).write_text(html, "utf-8")
 print(f"Wrote {a.out} ({len(html)/1024:.0f} KB), roles: {list(roles)}")

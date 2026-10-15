@@ -1,8 +1,6 @@
-// Turo Role Coach: Accenture Innovation Hub
+// Turo Role Coach: Disprz
 // Screens: #/  (industries)  →  #/roles/<industry>  →  #/coach/<industry>/<role>
-import {
-  ElevenLabsAgentSession, SessionEvent, AgentEventsEnum, SessionState, VoiceChatEvent,
-} from "/vendor/liveavatar-sdk.esm.js";
+// Session controller + Spatius/ElevenLabs runtime are appended from standalone/spatius.js (see server.mjs / build.py)
 
 const $app = document.getElementById("app");
 const IDLE_END_MS = 90_000;     // end a live session after 90s with no learner speech
@@ -55,7 +53,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 // ------------------------------------------------------------------ data
 let catalogue = null;
 async function getCatalogue(force = false) {
-  if (!catalogue || force) catalogue = await (await fetch("/api/catalogue", { cache: "no-store" })).json();
+  if (!catalogue || force) catalogue = await fetchCatalogue();
   return catalogue;
 }
 function toast(msg, ms = 4000) {
@@ -160,7 +158,7 @@ async function renderCoach(industryId, roleId) {
   const cat = await getCatalogue();
   const ind = cat.industries.find((i) => i.id === industryId) || { name: "", roles: [] };
   const roleMeta = ind.roles.find((r) => r.id === roleId) || {};
-  const role = await (await fetch(`/api/roles/${industryId}/${roleId}`)).json();
+  const role = await fetchRoleInfo(industryId, roleId);
   if (role.error) throw new Error(role.error);
   const coach = role.coach_name || "your coach";
 
@@ -314,184 +312,8 @@ async function renderCoach(industryId, roleId) {
 
   cleanupCurrent = () => { document.removeEventListener("keydown", onKey); document.removeEventListener("click", onDocClick); sheetMq.removeEventListener("change", onMq); document.body.classList.remove("sheet-lock", "coach-live"); return ctl.dispose(); };
 
-  if (autoStartNext) { autoStartNext = false; ctl.start(); }
-  else ctl.showStart(); // direct URL load: need a click to unlock mic/audio
-}
-
-function createSessionController({ industryId, roleId, role, ui }) {
-  const coach = role.coach_name || "your coach";
-  let session = null, mock = false, live = false, disposed = false;
-  let idleTimer = null, resetTimer = null, coachBuf = "";
-
-  const setStatus = (s, label) => { ui.status.dataset.s = s; ui.statusText.textContent = label; };
-  const veil = (html) => { ui.veil.innerHTML = html; ui.stage.classList.remove("live"); };
-  const showCoach = (t) => { ui.coachText.textContent = t; ui.coachBubble.classList.toggle("hidden", !t); };
-  const announce = (who, t) => { const el = document.getElementById("srLive"); if (el && t) el.textContent = `${who}: ${t}`; };
-  const showUser = (t) => { ui.userText.textContent = t; ui.userBubble.classList.toggle("hidden", !t); };
-  const bumpIdle = () => { clearTimeout(idleTimer); idleTimer = setTimeout(() => live && end("idle"), IDLE_END_MS); };
-  const setMicUI = (muted) => {
-    ui.mic.classList.toggle("off", muted);
-    ui.micIcon.innerHTML = icon(muted ? "micOff" : "mic", 24);
-    ui.micLabel.textContent = muted ? "Mic off" : "Mic on";
-    ui.mic.setAttribute("aria-label", muted ? "Microphone off, tap to turn on" : "Microphone on, tap to mute");
-    if (live) setStatus(muted ? "muted" : "listening", muted ? "Mic off" : "Listening");
-  };
-
-  function showStart() {
-    setStatus("connecting", "Ready");
-    veil(`<div><div style="color:var(--accent-2)">${icon("sparkle", 56)}</div><h2>Meet ${esc(coach)}</h2><p>Your ${esc(role.title)} coach. Use your voice, and tap a skill on the right any time to steer the conversation.</p><button class="cta" id="go">Start conversation ${icon("arrowR", 20)}</button></div>`);
-    ui.veil.querySelector("#go").onclick = start;
-  }
-
-  async function start() {
-    if (disposed) return;
-    clearTimeout(resetTimer);
-    ui.stage.querySelector(".overlay")?.remove();
-    showCoach(""); showUser("");
-    setStatus("connecting", "Connecting");
-    veil(`<div><div class="spinner"></div><h2>Connecting to ${esc(coach)}…</h2><p>Allow microphone access if your browser asks.</p></div>`);
-    try {
-      const r = await fetch("/api/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ industry: industryId, role: roleId }) });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.error || `Server error ${r.status}`);
-      if (disposed) return;
-      if (data.mock) return startMock();
-
-      session = new ElevenLabsAgentSession(data.session_token, { autoKeepAlive: true });
-      wire(session);
-      await session.start();
-      if (disposed) { session.stop().catch(() => {}); return; }
-
-      // Deliver role brief + knowledge as silent context (too large for dynamic variables)
-      for (const text of data.contextual_updates || []) session.sendContextualUpdate(text);
-
-      live = true; ui.mic.disabled = false; setMicUI(session.voiceChat.isMuted); ui.onLive?.();
-      bumpIdle();
-    } catch (e) {
-      console.error(e);
-      setStatus("connecting", "Offline");
-      veil(`<div><h2>Couldn't connect to ${esc(coach)}</h2><p>${esc(e.message)}</p><button class="cta" id="retry">Try again</button></div>`);
-      ui.veil.querySelector("#retry").onclick = start;
-    }
-  }
-
-  function wire(s) {
-    s.on(SessionEvent.SESSION_STREAM_READY, () => {
-      s.attach(ui.video);
-      ui.video.play().catch(() => {
-        veil(`<div><button class="cta" id="unmute">Tap to hear ${esc(coach)}</button></div>`);
-        ui.veil.querySelector("#unmute").onclick = () => { ui.video.play(); ui.stage.classList.add("live"); };
-      });
-      ui.stage.classList.add("live");
-    });
-    s.on(SessionEvent.SESSION_DISCONNECTED, () => { if (live) end("disconnected"); });
-    s.on(SessionEvent.SESSION_STATE_CHANGED, (st) => { if (st === SessionState.CONNECTING) setStatus("connecting", "Connecting"); });
-
-    s.on(AgentEventsEnum.USER_SPEAK_STARTED, () => { setStatus("listening", "Listening"); bumpIdle(); });
-    s.on(AgentEventsEnum.USER_SPEAK_ENDED, () => setStatus("thinking", "Thinking"));
-    s.on(AgentEventsEnum.USER_TRANSCRIPTION_CHUNK, (e) => e.text && showUser(e.text));
-    s.on(AgentEventsEnum.USER_TRANSCRIPTION, (e) => { if (e.text) { showUser(e.text); announce("You", e.text); } bumpIdle(); });
-
-    s.on(AgentEventsEnum.AVATAR_SPEAK_STARTED, () => { setStatus("speaking", "Speaking"); coachBuf = ""; });
-    s.on(AgentEventsEnum.AVATAR_SPEAK_ENDED, () => { if (live) setStatus(session?.voiceChat.isMuted ? "muted" : "listening", session?.voiceChat.isMuted ? "Mic off" : "Listening"); bumpIdle(); });
-    s.on(AgentEventsEnum.AVATAR_TRANSCRIPTION_CHUNK, (e) => { if (e.text) { coachBuf += (coachBuf && !/^\s/.test(e.text) ? " " : "") + e.text; showCoach(tail(coachBuf)); } });
-    s.on(AgentEventsEnum.AVATAR_TRANSCRIPTION, (e) => { if (e.text) { showCoach(tail(e.text)); announce(coach, e.text); } });
-
-    // ElevenLabs passthrough: fallback captions if the avatar transcript events don't arrive
-    s.on(AgentEventsEnum.ELEVENLABS_AGENT_EVENT, (e) => {
-      const d = e.data || {};
-      if (e.elevenlabs_event_type === "user_transcript") {
-        const t = d.user_transcription_event?.user_transcript || d.user_transcript;
-        if (t) showUser(t);
-      } else if (e.elevenlabs_event_type === "agent_response") {
-        const t = d.agent_response_event?.agent_response || d.agent_response;
-        if (t && !coachBuf) { showCoach(tail(t)); announce(coach, t); }
-      }
-    });
-    s.on(AgentEventsEnum.SESSION_STOPPED, () => { if (live) end("stopped"); });
-    s.voiceChat.on(VoiceChatEvent.MUTED, () => setMicUI(true));
-    s.voiceChat.on(VoiceChatEvent.UNMUTED, () => setMicUI(false));
-  }
-
-  // keep the coach caption to the last ~45 words so it fits the bubble
-  const tail = (t) => { const w = t.trim().split(/\s+/); return w.length > 45 ? "…" + w.slice(-45).join(" ") : t.trim(); };
-
-  function say(text) {
-    showUser(text); bumpIdle();
-    if (mock) return mockReply(text);
-    session?.sendUserMessage(text);
-    setStatus("thinking", "Thinking");
-  }
-
-  async function toggleMic() {
-    if (mock) { setMicUI(!ui.mic.classList.contains("off")); return; }
-    if (!session) return;
-    session.voiceChat.isMuted ? await session.voiceChat.unmute() : await session.voiceChat.mute();
-  }
-
-  async function stopSession() {
-    live = false; clearTimeout(idleTimer); ui.mic.disabled = true;
-    const s = session; session = null;
-    if (s) { try { await s.stop(); } catch (e) { console.warn(e); } }
-    ui.video.srcObject = null;
-  }
-
-  async function end(reason) {
-    if (disposed) return;
-    await stopSession();
-    setStatus("connecting", "Ended");
-    ui.stage.classList.remove("live");
-    showCoach(""); showUser("");
-    const msg = reason === "idle" ? "The session ended after a quiet spell." : reason === "disconnected" || reason === "stopped" ? "The session has ended." : "";
-    let n = RESET_AFTER_END_S;
-    ui.stage.insertAdjacentHTML("beforeend", `
-      <div class="overlay"><div>
-        <div style="color:var(--accent-2);display:grid;place-items:center">${icon("sparkle", 52)}</div>
-        <h2>Thanks for talking with ${esc(coach)}</h2>
-        <p>${esc(msg || "Ready for another conversation?")}</p>
-        <div class="btns">
-          <button class="cta" id="again">${icon("restart", 20)} Start again</button>
-          <button class="ghost" id="other">Try another role</button>
-        </div>
-        <div class="countdown" id="cd">Returning to the start in ${n}s</div>
-      </div></div>`);
-    ui.stage.querySelector("#again").onclick = () => start();
-    ui.stage.querySelector("#other").onclick = () => go("#/");
-    const tick = () => {
-      n -= 1;
-      const cd = ui.stage.querySelector("#cd");
-      if (!cd) return;
-      if (n <= 0) return go("#/");
-      cd.textContent = `Returning to the start in ${n}s`;
-      resetTimer = setTimeout(tick, 1000);
-    };
-    resetTimer = setTimeout(tick, 1000);
-  }
-
-  async function restart() { await stopSession(); start(); }
-
-  async function dispose() { disposed = true; clearTimeout(resetTimer); await stopSession(); }
-
-  // ---------- mock mode (MOCK_MODE=1 on the server): UI without avatar/voice ----------
-  function startMock() {
-    mock = true; live = true; ui.mic.disabled = false; ui.video.style.display = "none"; ui.onLive?.();
-    ui.stage.classList.add("live");
-    setStatus("speaking", "Speaking");
-    showCoach(`Hi, I'm ${coach}, and I'll be your ${role.title} coach today. Tell me a little about what you do, and I'll suggest where we start.`);
-    setTimeout(() => live && setStatus("listening", "Listening"), 3500);
-    bumpIdle();
-  }
-  function mockReply(text) {
-    setStatus("thinking", "Thinking");
-    setTimeout(() => {
-      setStatus("speaking", "Speaking");
-      showCoach(`Great question. Let's break "${text.replace(/\.$/, "")}" into a few key factors you should consider… (mock mode)`);
-      setTimeout(() => live && setStatus("listening", "Listening"), 3000);
-    }, 900);
-  }
-
-  window.addEventListener("beforeunload", () => session?.stop());
-  return { start, showStart, say, toggleMic, end, restart, dispose, isLive: () => live };
+  autoStartNext = false;
+  ctl.showStart(); // direct URL load: need a click to unlock mic/audio
 }
 
 route();

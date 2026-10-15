@@ -497,12 +497,12 @@ svg { display: block; }
 }
 
 /* industry card photos */
-.img-bfsi { --card-img: url("/assets/industries/bfsi.jpg"); }
-.img-technology { --card-img: url("/assets/industries/technology.jpg"); }
-.img-healthcare { --card-img: url("/assets/industries/healthcare.jpg"); }
-.img-consumer-retail { --card-img: url("/assets/industries/consumer-retail.jpg"); }
-.img-manufacturing { --card-img: url("/assets/industries/manufacturing.jpg"); }
-.img-energy { --card-img: url("/assets/industries/energy.jpg"); }
+.img-bfsi { --card-img: url("/assets/industry-bfsi.jpg"); }
+.img-technology { --card-img: url("/assets/industry-technology.jpg"); }
+.img-healthcare { --card-img: url("/assets/industry-healthcare.jpg"); }
+.img-consumer-retail { --card-img: url("/assets/industry-consumer-retail.jpg"); }
+.img-manufacturing { --card-img: url("/assets/industry-manufacturing.jpg"); }
+.img-energy { --card-img: url("/assets/industry-energy.jpg"); }
 
 /* available industry: violet border, soft glow, filled arrow */
 .industry-card:not(:disabled) {
@@ -516,3 +516,12 @@ svg { display: block; }
   .industry-card:hover:not(:disabled) { border-color: var(--accent-2); box-shadow: 0 0 0 1px rgba(192, 132, 252, .4), 0 0 32px rgba(168, 85, 247, .6), 0 0 70px rgba(123, 44, 255, .3); }
   .industry-card:hover:not(:disabled) .arrow-btn { background: var(--accent); }
 }
+
+.avatar-box { position: absolute !important; inset: 0 !important; z-index: 0; opacity: 0; transition: opacity .6s; background: #0c0718 url("/assets/avatar-poster.webp") center / cover no-repeat; }
+.stage.live .avatar-box, .stage.avatar-ready .avatar-box { opacity: 1; }
+.avatar-box canvas { width: 100% !important; height: 100% !important; display: block; }
+.stage .veil.soft { background: linear-gradient(180deg, rgba(7,4,15,0) 35%, rgba(7,4,15,.85) 100%); backdrop-filter: none; align-items: end; padding-bottom: 140px; z-index: 3; }
+.stage .veil { z-index: 3; }
+.stage .veil.soft h2 { text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+
+.brand-logo { height: 34px; width: auto; }

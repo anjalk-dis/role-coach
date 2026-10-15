@@ -1,9 +1,11 @@
-// ===== Standalone runtime (Spatius avatar + ElevenLabs agent, all in-browser) =====
-const CONTENT = JSON.parse(document.getElementById("content-data").textContent);
+// ===== Coach runtime (Spatius avatar + ElevenLabs agent) =====
+// Two modes: single-file (content + keys embedded in the HTML) or server (node server.mjs keeps keys server-side).
+const SERVER_MODE = !document.getElementById("content-data");
+const CONTENT = SERVER_MODE ? null : JSON.parse(document.getElementById("content-data").textContent);
 const { AvatarSDK, AvatarManager, AvatarView, DrivingServiceMode, ConversationState, ConnectionState, Conversation } = window.CoachVendor;
 
 // ============ CONFIG: everything the demo needs lives here ============
-const CONFIG = {
+let CONFIG = {
   elevenlabsAgentId: "__ELEVENLABS_AGENT_ID__",
   agentSampleRate: 16000,                 // must match the agent's TTS output format (currently PCM 16000 Hz)
   spatiusAppId: "__SPATIUS_APP_ID__",
@@ -12,6 +14,7 @@ const CONFIG = {
   spatiusRegion: "ap-northeast",          // your Spatius app lives in ap-northeast
   previewMode: false,                     // true = UI only, no avatar/voice
 };
+if (SERVER_MODE) CONFIG = { ...CONFIG, spatiusApiKey: "", ...(await (await fetch("/api/config", { cache: "no-store" })).json()) };
 const MAX_VAR_CHARS = 1000, CHUNK_CHARS = 9000;
 const filled = (v) => v && !String(v).startsWith("__");
 
@@ -69,6 +72,12 @@ function initSpatius() {
     .catch((e) => { _sdkInit = null; throw e; }));
 }
 async function spatiusToken() {
+  if (SERVER_MODE) {
+    const r = await fetch("/api/spatius-token", { method: "POST" });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !j.sessionToken) throw new Error(j.error || `Spatius token error ${r.status}`);
+    return j.sessionToken;
+  }
   let r;
   try {
     r = await fetch(`https://console.${CONFIG.spatiusRegion}.spatius.ai/v1/console/session-tokens`, {
@@ -82,6 +91,7 @@ async function spatiusToken() {
 }
 function spatiusAvatarId() {
   if (filled(CONFIG.spatiusAvatarId)) return Promise.resolve(CONFIG.spatiusAvatarId);
+  if (SERVER_MODE) return Promise.reject(new Error("SPATIUS_AVATAR_ID is missing in .env"));
   return (_avatarIdP ??= (async () => {
     let r;
     try { r = await fetch("https://console.spatius.ai/v1/open/avatars?pagination.pageSize=20", { headers: { "X-App-ID": CONFIG.spatiusAppId, "X-API-Key": CONFIG.spatiusApiKey } }); }
@@ -93,6 +103,25 @@ function spatiusAvatarId() {
     return id;
   })().catch((e) => { _avatarIdP = null; throw e; }));
 }
+// Catalogue + role info for the screens (embedded content, or the server API)
+async function fetchCatalogue() {
+  if (!SERVER_MODE) return buildCatalogue();
+  return (await fetch("/api/catalogue", { cache: "no-store" })).json();
+}
+async function fetchRoleInfo(industryId, roleId) {
+  if (!SERVER_MODE) return loadRoleLocal(industryId, roleId).publicRole;
+  const j = await (await fetch(`/api/roles/${industryId}/${roleId}`)).json();
+  if (j.error) throw new Error(j.error);
+  return j;
+}
+// Role variables + context updates for the agent
+async function getRoleData(industryId, roleId) {
+  if (!SERVER_MODE) return loadRoleLocal(industryId, roleId);
+  const r = await fetch("/api/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ industry: industryId, role: roleId }) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || `Server error ${r.status}`);
+  return { dynamicVariables: j.dynamic_variables, contextualUpdates: j.contextual_updates };
+}
 function b64ToArrayBuffer(b64) {
   const bin = atob(b64); const out = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
@@ -102,7 +131,7 @@ function b64ToArrayBuffer(b64) {
 // ---------- Session controller: ElevenLabs (brain + voice) → Spatius (face + playback) ----------
 function createSessionController({ industryId, roleId, role, ui }) {
   const coach = role.coach_name || "your coach";
-  const roleData = loadRoleLocal(industryId, roleId);
+  const roleDataP = getRoleData(industryId, roleId); roleDataP.catch(() => {});
   let view = null, ctrl = null, conv = null, live = false, disposed = false, mock = false, prepared = null;
   let streaming = false, held = null, endTimer = null, idleTimer = null, resetTimer = null, micMuted = false;
 
@@ -180,6 +209,7 @@ function createSessionController({ industryId, roleId, role, ui }) {
       if (CONFIG.previewMode) return startMock();
       if (!ctrl) { await prepare(); return showStart(); } // avatar wasn't ready: one more tap needed
       await audioUnlock;
+      const roleData = await roleDataP;
       AvatarSDK.setSessionToken(await spatiusToken());
       await ctrl.start();
       if (disposed) return;

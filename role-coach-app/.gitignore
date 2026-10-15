@@ -1,2 +1,5 @@
 .env
 node_modules/
+# Built output: build.py bakes API keys into this file. Never commit it.
+role-coach.html
+standalone/*.html

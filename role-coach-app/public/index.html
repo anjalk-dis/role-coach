@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Role Coach · Accenture Innovation Hub</title>
+  <title>Role Coach · Disprz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -14,15 +14,17 @@
 
   <header class="topbar">
     <a class="brand" href="#/" aria-label="Home">
-      <img src="/assets/accenture-logo.png" alt="accenture" class="brand-logo" />
-      <span class="brand-divider"></span>
-      <span class="brand-hub">INNOVATION HUB</span>
+      <img src="/assets/disprz-logo-light.svg" alt="Disprz" class="brand-logo" />
     </a>
     <span class="brand-product">ROLE COACH</span>
   </header>
 
   <main id="app"></main>
 
-  <script type="module" src="/app.js"></script>
+  <!-- runtime:start -->
+  <script src="/vendor/wasm-shim.js"></script>
+  <script src="/vendor/coach-vendor.iife.js"></script>
+  <script type="module" src="/bundle.js"></script>
+  <!-- runtime:end -->
 </body>
 </html>
