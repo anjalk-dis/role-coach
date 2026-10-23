@@ -43,7 +43,7 @@ This writes `role-coach.html`, which is about 6 MB because it includes the Spati
 
 ## ElevenLabs agent settings
 - **System prompt:** `agent/system_prompt_template.md`.
-- **First message:** use `{{coach_name}}` and `{{role_title}}`.
+- **First message:** use `{{coach_name}}` and `{{coach_experience}}`, for example: "Hi, I'm {{coach_name}}, your personalised coach, built by Disprz. I bring {{coach_experience}}. I can teach you a tough concept, simplify something you're learning, role-play real scenarios to find your gaps, or work alongside you when you're stuck on a task. To start, tell me a bit about yourself. Then, how can I help you today?". `coach_experience` comes from `persona.coach_experience` in each role's `config.json`. Add it to the agent's dynamic variables.
 - **TTS output format:** PCM, matching `AGENT_SAMPLE_RATE`. 24000 Hz sounds better than 16000; if you change it, update the setting here and rebuild.
 - **Authentication:** off. The browser connects with the agent ID.
 - **Knowledge base / RAG:** off. Knowledge arrives as context updates instead.

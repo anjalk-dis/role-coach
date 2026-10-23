@@ -19,6 +19,7 @@ export async function loadRole(readText, industryId, roleId) {
   const vars = {
     coach_name: persona.coach_name,
     coach_background: persona.background,
+    coach_experience: persona.coach_experience || "years of hands-on industry experience",
     coaching_tone: persona.tone,
     role_title: profile.title,
     role_seniority: profile.seniority,

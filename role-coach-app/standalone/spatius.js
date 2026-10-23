@@ -38,7 +38,7 @@ function loadRoleLocal(industryId, roleId) {
   const { profile, skills, knowledge_areas, persona } = config;
   const bullets = (a) => a.map((s) => `- ${s}`).join("\n");
   const vars = {
-    coach_name: persona.coach_name, coach_background: persona.background, coaching_tone: persona.tone,
+    coach_name: persona.coach_name, coach_background: persona.background, coach_experience: persona.coach_experience || "years of hands-on industry experience", coaching_tone: persona.tone,
     role_title: profile.title, role_seniority: profile.seniority, role_summary: profile.summary,
     role_responsibilities: bullets(profile.responsibilities), industry: config.industry,
     skills: skills.map((s, i) => `${i + 1}. ${s.name}`).join("\n"),
