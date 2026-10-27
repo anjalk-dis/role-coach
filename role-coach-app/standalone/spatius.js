@@ -51,6 +51,8 @@ function loadRoleLocal(industryId, roleId) {
     `Role: ${profile.title} (${profile.seniority}), ${config.industry}.\n\nSkills in detail (name: what it covers. Expected proficiency):\n` +
     skills.map((s, i) => `${i + 1}. ${s.name}: ${s.description} Expected proficiency: ${s.proficiency}`).join("\n");
   for (const [k, v] of Object.entries(overflow)) brief += `\n\n${k}:\n${v}`;
+  // Role-specific guardrails (config: persona.guardrails) ride in the ROLE BRIEF
+  if (persona.guardrails) brief += `\n\nROLE-SPECIFIC GUARDRAILS (these override the general coaching approach whenever they apply):\n${persona.guardrails}`;
   const split = (text) => { if (text.length <= CHUNK_CHARS) return [text]; const out = []; let cur = ""; for (const p of text.split(/\n{2,}/)) { if (cur && cur.length + p.length + 2 > CHUNK_CHARS) { out.push(cur); cur = ""; } cur += (cur ? "\n\n" : "") + p; } if (cur) out.push(cur); return out; };
   const pieces = knowledge_areas.flatMap((a) => a.documents.map((d) => `=== KNOWLEDGE AREA: ${a.name} ===\n\n${(entry.kb[d] || "").trim()}`));
   const chunks = []; let cur = "";
@@ -143,8 +145,9 @@ function createSessionController({ industryId, roleId, role, ui }) {
   const setStatus = (s, label) => { ui.status.dataset.s = s; ui.statusText.textContent = label; };
   const veil = (html, soft = false) => { ui.veil.innerHTML = html; ui.veil.classList.toggle("soft", soft); ui.veil.style.opacity = "1"; ui.veil.style.pointerEvents = "auto"; };
   const hideVeil = () => { ui.veil.style.opacity = "0"; ui.veil.style.pointerEvents = "none"; };
-  const showCoach = (t) => { ui.coachText.textContent = t; ui.coachBubble.classList.toggle("hidden", !t); };
-  const showUser = (t) => { ui.userText.textContent = t; ui.userBubble.classList.toggle("hidden", !t); };
+  // Only the most recent line is shown: a new coach line clears the learner's, and vice versa
+  const showCoach = (t) => { ui.coachText.textContent = t; ui.coachBubble.classList.toggle("hidden", !t); if (t) { ui.userText.textContent = ""; ui.userBubble.classList.add("hidden"); } };
+  const showUser = (t) => { ui.userText.textContent = t; ui.userBubble.classList.toggle("hidden", !t); if (t) { ui.coachText.textContent = ""; ui.coachBubble.classList.add("hidden"); } };
   const tail = (t) => { const w = t.trim().split(/\s+/); return w.length > 45 ? "…" + w.slice(-45).join(" ") : t.trim(); };
   const bumpIdle = () => { clearTimeout(idleTimer); idleTimer = setTimeout(() => live && end("idle"), IDLE_END_MS); };
   const listeningLabel = () => (micMuted ? ["muted", "Mic off"] : ["listening", "Listening"]);

@@ -47,6 +47,8 @@ export async function loadRole(readText, industryId, roleId) {
     `Skills in detail (name: what it covers. Expected proficiency):\n` +
     skills.map((s, i) => `${i + 1}. ${s.name}: ${s.description} Expected proficiency: ${s.proficiency}`).join("\n");
   for (const [k, v] of Object.entries(overflow)) brief += `\n\n${k}:\n${v}`;
+  // Role-specific guardrails (config: persona.guardrails) ride in the ROLE BRIEF
+  if (persona.guardrails) brief += `\n\nROLE-SPECIFIC GUARDRAILS (these override the general coaching approach whenever they apply):\n${persona.guardrails}`;
 
   // ---------- ROLE KNOWLEDGE (chunked) ----------
   const pieces = [];

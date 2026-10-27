@@ -59,16 +59,28 @@
       ]
     },
     {
-      "id": "healthcare",
-      "name": "Healthcare",
-      "icon": "heart",
+      "id": "workplace-growth",
+      "name": "Workplace & Personal Growth",
+      "icon": "people",
       "theme": "teal",
       "roles": [
         {
-          "id": "clinical-operations-manager",
-          "name": "Clinical Operations Manager",
-          "blurb": "Run safe, efficient clinical operations.",
+          "id": "womens-workplace-expert",
+          "name": "Women's Workplace Expert",
+          "blurb": "Grow your career, know your rights and navigate work with confidence.",
+          "icon": "people"
+        },
+        {
+          "id": "wellness-expert",
+          "name": "Wellness Expert",
+          "blurb": "Manage stress, prevent burnout and build healthier work habits.",
           "icon": "pulse"
+        },
+        {
+          "id": "appraisal-expert",
+          "name": "Appraisal Expert",
+          "blurb": "Prepare for, navigate and get the most out of performance reviews.",
+          "icon": "chart"
         }
       ]
     },

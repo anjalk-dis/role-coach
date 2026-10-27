@@ -104,6 +104,11 @@ async function serveStatic(req, res, url) {
     return res.end(await bundle());
   }
   if (p === "/coach-config.js" && !(await stat(path.join(PUBLIC_DIR, "coach-config.js")).then(() => true, () => false))) {
+    // Deployed (Cloud Run): the Spatius config is a mounted secret file, e.g. COACH_CONFIG_FILE=/secrets/coach-config.js
+    if (process.env.COACH_CONFIG_FILE) {
+      const body = await readFile(process.env.COACH_CONFIG_FILE, "utf8").catch(() => null);
+      if (body) { res.writeHead(200, { "Content-Type": "text/javascript", "Cache-Control": "no-cache" }); return res.end(body); }
+    }
     res.writeHead(200, { "Content-Type": "text/javascript", "Cache-Control": "no-cache" });
     return res.end("window.COACH_CONFIG = {}; console.warn('coach-config.js not found: copy public/coach-config.example.js to public/coach-config.js');");
   }

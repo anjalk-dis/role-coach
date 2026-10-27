@@ -182,11 +182,13 @@ svg { display: block; }
   padding: 14px 20px; line-height: 1.45; transition: opacity .3s, transform .3s;
 }
 .bubble.hidden { opacity: 0; transform: translateY(6px); pointer-events: none; }
-.bubble-coach { right: 84px; bottom: 34%; width: min(42%, 380px); font-size: 18px; max-height: 40%; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+/* Captions sit in the open space left of the coach, never over her face; one line (the latest) at a time */
+.bubble-coach, .bubble-user { left: 28px; bottom: 134px; width: min(27%, 360px); max-height: calc(100% - 250px); overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+.bubble-coach { font-size: 18px; }
 .bubble-coach .who { display: flex; align-items: center; gap: 10px; color: var(--accent-2); font-weight: 600; margin-bottom: 6px; font-size: 17px; }
-.bubble-user { left: 50%; transform: translateX(-50%); bottom: 132px; width: min(70%, 700px); display: flex; gap: 16px; align-items: flex-start; }
-.bubble-user.hidden { transform: translateX(-50%) translateY(6px); }
+.bubble-user { font-size: 16px; }
 .bubble-user .who { font-size: 15px; color: var(--muted); margin-bottom: 2px; }
+.bubble-user > svg { display: none; }
 .bubble-user .txt { font-size: 16px; }
 
 .controls {
@@ -499,7 +501,7 @@ svg { display: block; }
 /* industry card photos */
 .img-bfsi { --card-img: url("/assets/industry-bfsi.jpg"); }
 .img-technology { --card-img: url("/assets/industry-technology.jpg"); }
-.img-healthcare { --card-img: url("/assets/industry-healthcare.jpg"); }
+.img-workplace-growth { --card-img: url("/assets/industry-healthcare.jpg"); }
 .img-consumer-retail { --card-img: url("/assets/industry-consumer-retail.jpg"); }
 .img-manufacturing { --card-img: url("/assets/industry-manufacturing.jpg"); }
 .img-insurance { --card-img: url("/assets/industry-insurance.jpg"); }
